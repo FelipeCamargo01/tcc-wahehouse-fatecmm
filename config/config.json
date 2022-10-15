@@ -1,0 +1,30 @@
+{
+  "development": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgresql",
+    "dialectOptions": {
+      "ssl": false
+    },
+    "ssl":false
+  },
+  "test": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgresql",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+     }
+    },
+    "ssl":false
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgresql",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": true
+     }
+    },
+    "ssl":true
+  }
+}
