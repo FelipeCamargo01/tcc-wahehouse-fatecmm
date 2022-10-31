@@ -33,6 +33,10 @@ const User = connection.define(
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
+    },
+    role: {
+      allowNull: false,
+      type: Sequelize.STRING
     }
   },
   {
@@ -40,15 +44,12 @@ const User = connection.define(
   }
 );
 
-// User.sync({force: true});
-
 const Supplier = connection.define(
   "suppliers",
   {
     id: {
-      allowNull: false,
       type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
+      defaultValue: Sequelize.literal("uuid_generate_v4()"),
       primaryKey: true,
     },
     name: {
@@ -74,6 +75,28 @@ const Supplier = connection.define(
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
+    },
+    cnpj: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    //razão social
+    corporateName: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    //nome fantasia
+    fantasyName: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    cep: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    addressNumber: {
+      allowNull: false,
+      type: Sequelize.STRING
     }
   },
   {
@@ -81,24 +104,18 @@ const Supplier = connection.define(
   }
 );
 
-// Supplier.sync({force: true});
-
 const Product = connection.define(
   "products",
   {
-    id: {
-      allowNull: false,
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      primaryKey: true,
-    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    //Código
     SKU: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      primaryKey: true
     },
     price: {
       type: Sequelize.DOUBLE,
@@ -121,14 +138,25 @@ const Product = connection.define(
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
+    },
+    rfId: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    //lote
+    batchNumber: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   },
   {
     freezeTableName: true,
   }
 );
-
-// Product.sync({force: true});
 
 const StockHistory = connection.define(
   "stock-history",
@@ -164,14 +192,16 @@ const StockHistory = connection.define(
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
+    },
+    actionDate: {
+      allowNull: false,
+      type: Sequelize.DATE
     }
   },
   {
     freezeTableName: true,
   }
 );
-
-// StockHistory.sync({force: true});
 
 Supplier.hasMany(Product, {
   foreignKey: "supplierId",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,6 +12,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
+require("./css/navbar.css");
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   navbarColor: {
-    backgroundColor: "#19262E",
+    backgroundColor: "#00C1F5",
   },
   title: {
     fontWeight: "bold",
@@ -56,6 +58,24 @@ export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isProfileMenuOpen = Boolean(anchorEl);
 
+  const [user, setUser] = useState(null);
+  const [isLogged, setIsLogged] = useState(null);
+
+  const getUserFromStorage = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setUser(user);
+      setIsLogged(true);
+    } else {
+      setUser(null);
+      setIsLogged(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserFromStorage();
+  }, [isLogged]);
+
   const onClickSignIn = () => {
     props.onLogin();
     history.push({
@@ -77,17 +97,17 @@ export default function Navbar(props) {
   };
 
   const renderLogin = () => {
-    if (props.user != null) {
+    if (user != null) {
       return (
         <Box>
           <Box>
             <Typography
-              variant="h5"
+              variant="h6"
               className={classes.profileName}
-              component="h5"
+              component="h6"
               onClick={handleClick}
             >
-              {props.user?.firstName} {props.user?.lastName}
+              {user?.firstName} {user?.lastName}
             </Typography>
           </Box>
           <Menu
@@ -123,20 +143,45 @@ export default function Navbar(props) {
     }
   };
 
+  const onChangeScreenClick = (screen) => {
+    // props.onChangeScreen(screen);
+    removeRemoveActiveButton();
+    setActiveButton(screen);
+  }
+
+  const removeRemoveActiveButton = () => {
+    let parentElement = document.getElementById("buttons-list");
+    let childElements = parentElement.children;
+    
+    for (let i = 0; i < childElements.length; i++) {
+      childElements[i].classList.remove("active");
+    }
+  }
+
+  const setActiveButton = (button) => {
+    document.getElementById(button).classList.add("active");
+  }
+
   const renderMenuButtons = () => {
-    if (props.isLogged) {
+    if (isLogged) {
       return (
-        <Box>
-          <Button onClick={() => { props.onChangeScreen('Home') }} color="inherit">Home</Button>
-          <Button onClick={() => { props.onChangeScreen('Fornecedores') }} color="inherit">Fornecedores</Button>
-          <Button onClick={() => { props.onChangeScreen('Produtos') }} color="inherit">Produtos</Button>
-          <Button onClick={() => { props.onChangeScreen('Movimentação') }} color="inherit">Movimentações</Button>
+        <Box id="buttons-list">
+          <Button id="Home" onClick={() => { navigateTo(''); onChangeScreenClick('Home') }} color="inherit">Home</Button>
+          <Button id="Fornecedores" onClick={() => { navigateTo('suppliers') }} color="inherit">Fornecedores</Button>
+          <Button id="Produtos" onClick={() => { navigateTo('products') }} color="inherit">Produtos</Button>
+          <Button id="Movimentação" onClick={() => { onChangeScreenClick('Movimentação') }} color="inherit">Movimentações</Button>
         </Box>
       );
     } else {
       return;
     }
   };
+
+  const navigateTo = (screen) =>{
+    history.push({
+      pathname: `/${screen}`,
+    });
+  }
 
   return (
     <div className={classes.root}>

@@ -33,11 +33,17 @@ import { toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.min.css";
 
+require('./css/home.css');
+
 const useStyles = makeStyles({
   root: {
     width: "100%",
     height: "100%",
     backgroundColor: "white",
+  },
+  textField: {
+    border: '2px solid #0084A8 !important',
+    borderRadius: '5px',
   },
 });
 
@@ -366,9 +372,9 @@ export default function Home() {
           <DialogTitle id="form-dialog-title">Cadastro de produto</DialogTitle>
           <DialogContent>
             <form onSubmit={createProduct}>
-              <Grid container spacing={2}>
+              <Grid id='item-form' container spacing={2}>
                 <Grid item xs={12}>
-                  <TextField
+                  <input
                     autoComplete="sname"
                     name="supplierName"
                     variant="outlined"
@@ -377,7 +383,9 @@ export default function Home() {
                     id="productName"
                     label="Nome do produto"
                     autoFocus
+                    placeholder="Nome do produto"
                     onChange={(e) => setProductName(e.target.value)}
+                    className={classes.textField}
                   />
                 </Grid>
                 <Grid item xs={12}>

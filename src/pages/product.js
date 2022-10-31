@@ -18,6 +18,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import UserService from "../services/user.service";
 import { toast } from "react-toastify";
 
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+
+require('./css/products.css');
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -30,13 +38,31 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-  },
+  }
 }));
 
 export default function Product(props) {
+  // product form
+  const [productName, setProductName] = useState(null);
+  const [productSKU, setProductSKU] = useState(null);
+  const [productPrice, setProductPrice] = useState(null);
+  const [productSupplierId, setProductSupplierId] = useState(null);
+  const [productImage, setProductImage] = useState(null);
+  const [productsItems, setProductItems] = useState([]);
+  const [productInfos, setProductInfos] = useState([]);
+
   const classes = useStyles();
   const [isConfirmationDeleteModalOpen, setIsConfirmationDeleteModalOpen] =
     useState(false);
+
+  const [productSuppliers, setProductSuppliers] = useState([]);
+
+  const getProducts = () => {
+    setProductItems([]);
+    UserService.getProducts().then((response) => {
+      setProductItems(response.data);
+    });
+  };
 
   const onDeleteProduct = () => {
     console.log(props.supplier);
@@ -48,6 +74,31 @@ export default function Product(props) {
       })
       .catch((error) => {
         toast.error(error.data?.data);
+      });
+  };
+
+  const createProduct = (event) => {
+    event.preventDefault();
+    UserService.createProduct({
+      name: productName,
+      SKU: productSKU,
+      price: productPrice,
+      supplierId: productSupplierId,
+      productImage: productImage
+    })
+      .then((response) => {
+        toast.success(response.data);
+        // setIsModalFormOpen(false);
+        getProducts();
+      })
+      .catch((error) => {
+        if (error.data) {
+          if (error.data.data) {
+            toast.error(error.data.data.message);
+          }
+        } else {
+          toast.error(error);
+        }
       });
   };
 
@@ -85,6 +136,101 @@ export default function Product(props) {
       </div>
     );
   };
+
+  const productForm = () => {
+    <form onSubmit={createProduct}>
+      <Grid id='item-form' container spacing={2}>
+        <Grid item xs={12}>
+
+        </Grid>
+        <Grid item xs={12}>
+          <input
+            autoComplete="sname"
+            name="supplierName"
+            variant="outlined"
+            required
+            fullWidth
+            id="productName"
+            label="Nome do produto"
+            autoFocus
+            placeholder="Nome do produto"
+            onChange={(e) => setProductName(e.target.value)}
+            className={classes.textField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="productSKU"
+            label="SKU do produto"
+            name="productSKU"
+            onChange={(e) => setProductSKU(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="productImageLink"
+            label="Link da imagem do produto"
+            name="productImageLink"
+            onChange={(e) => setProductImage(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            keyboardType="numeric"
+            variant="outlined"
+            required
+            fullWidth
+            name="productPrice"
+            label="Preço do produto"
+            id="productPrice"
+            onChange={(e) => setProductPrice(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputLabel>Fornecedor</InputLabel>
+          <Select
+            labelId="demo-mutiple-name-label"
+            id="demo-mutiple-name"
+            value={productSupplierId}
+            required
+            onChange={(event) => {
+              setProductSupplierId(event.target.value);
+            }}
+            style={{ width: "100%" }}
+            input={<Input />}
+          >
+            {productSuppliers.map((productSupplier) => (
+              <MenuItem
+                key={productSupplier.id}
+                value={productSupplier.id}
+              >
+                {productSupplier.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+      </Grid>
+      <Box mt={3} style={{ float: "right" }}>
+        <Button
+          onClick={() => {
+            // setIsModalFormOpen(false);
+          }}
+          color="primary"
+        >
+          Cancelar
+        </Button>
+        <Button color="primary" type="submit">
+          Confirmar
+        </Button>
+      </Box>
+    </form>
+  }
 
   return (
     <div className={classes.root}>

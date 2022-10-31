@@ -35,6 +35,28 @@ module.exports = {
           updatedAt: {
             allowNull: false,
             type: Sequelize.DATE
+          },
+          cnpj: {
+            allowNull: false,
+            type: Sequelize.STRING
+          },
+          //razão social
+          corporateName: {
+            allowNull: false,
+            type: Sequelize.STRING
+          },
+          //nome fantasia
+          fantasyName: {
+            allowNull: false,
+            type: Sequelize.STRING
+          },
+          cep: {
+            allowNull: false,
+            type: Sequelize.STRING
+          },
+          addressNumber: {
+            allowNull: false,
+            type: Sequelize.STRING
           }
         });
       });

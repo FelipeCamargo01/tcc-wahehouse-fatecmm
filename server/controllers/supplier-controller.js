@@ -7,7 +7,12 @@ class SupplierController {
             email: body.email,
             address: body.address,
             name: body.name,
-            phone: body.phone
+            phone: body.phone,
+            cnpj: body.cnpj,
+            corporateName: body.corporateName,
+            fantasyName: body.fantasyName,
+            cep: body.cep,
+            addressNumber: body.addressNumber
         });
 
         return ResponseParse.response("OK", 'Fornecedor criado com sucesso!');

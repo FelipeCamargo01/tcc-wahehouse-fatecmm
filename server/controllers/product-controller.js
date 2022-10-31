@@ -13,7 +13,9 @@ class ProductController {
             SKU: body.SKU,
             price: body.price,
             supplierId: body.supplierId,
-            productImage: body.productImage
+            description: body.description,
+            rfId: body.rfId,
+            batchNumber: body.batchNumber,
         });
 
         return ResponseParse.response("OK", 'Produto criado com sucesso!');
@@ -72,9 +74,6 @@ class ProductController {
                 { type: 'Entrada' }
             ]
         } });
-
-        console.log(stockMovimentationOutput);
-        console.log(stockMovimentationInput);
 
         for(const stockMovimentation of stockMovimentationOutput) {
             console.log(stockMovimentation.totalQuantity);

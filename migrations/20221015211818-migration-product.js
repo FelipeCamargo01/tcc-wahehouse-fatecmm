@@ -7,18 +7,15 @@ module.exports = {
       .query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
       .then(async () => {
         await queryInterface.createTable("products", {
-          id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.literal("uuid_generate_v4()"),
-            primaryKey: true,
-          },
           name: {
             type: Sequelize.STRING,
             allowNull: false,
           },
+          //Código
           SKU: {
             type: Sequelize.INTEGER,
             allowNull: false,
+            primaryKey: true
           },
           price: {
             type: Sequelize.DOUBLE,
@@ -41,6 +38,19 @@ module.exports = {
           updatedAt: {
             allowNull: false,
             type: Sequelize.DATE
+          },
+          rfId: {
+            type: Sequelize.STRING,
+            allowNull: false
+          },
+          //lote
+          batchNumber: {
+            type: Sequelize.STRING,
+            allowNull: false
+          },
+          description: {
+            type: Sequelize.STRING,
+            allowNull: true
           }
         });
       });

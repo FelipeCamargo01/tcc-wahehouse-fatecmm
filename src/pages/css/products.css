@@ -1,0 +1,29 @@
+.select-search-container {
+    --select-search-background: #fff !important;
+    --select-search-border: #313244 !important;
+    --select-search-selected: #89b4fa !important;
+    --select-search-text: #000 !important;
+    --select-search-subtle-text: #a6adc8;
+    --select-search-highlight: #1e1e2e;
+    --select-search-selected: rgb(46,155,183) !important;
+}
+
+.select-search-is-highlighted,
+.select-search-option:not(.select-search-is-selected):hover {
+    background: gainsboro !important
+}
+.select-search-option,
+.select-search-not-found {
+    padding: 0 !important
+}
+
+.select-search-input {
+    padding: 0 !important;
+}
+.select-search-options {
+    padding-left: 0px !important;
+}
+
+.select-search-option {
+    padding-left: 25px !important;
+}
