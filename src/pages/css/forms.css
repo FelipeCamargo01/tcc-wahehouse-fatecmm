@@ -1,9 +1,9 @@
-input {
+#item-form input {
     width: 100%;
     border: solid 3px rgb(46,155,183) !important 
 }
 
-textarea {
+#item-form textarea {
     width: 100%;
     border: solid 3px rgb(46,155,183) !important 
 }
