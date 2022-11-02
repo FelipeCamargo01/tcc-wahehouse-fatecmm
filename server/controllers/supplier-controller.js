@@ -26,10 +26,34 @@ class SupplierController {
     }
 
     static async deleteSupplier(body) {
-        await Product.destroy({where: {supplierId: body.supplierId}});
-        await Supplier.destroy({where: {Id: body.supplierId}});
+        await Product.destroy({where: {supplierId: body.id}});
+        await Supplier.destroy({where: {id: body.id}});
 
         return ResponseParse.response('OK', "Fornecedor deletado com sucesso!");
+    }
+    
+    static async updateSupplier(body) {
+        console.log(body);
+        await Supplier.update(
+            {
+                email: body.email,
+                address: body.address,
+                name: body.name,
+                phone: body.phone,
+                cnpj: body.cnpj,
+                corporateName: body.corporateName,
+                fantasyName: body.fantasyName,
+                cep: body.cep,
+                addressNumber: body.addressNumber
+            },
+            {
+                where: {
+                    id: body.id
+                }
+            }
+        );
+
+        return ResponseParse.response("OK", 'Fornecedor atualizado com sucesso!');
     }
 }
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Navbar from "./navbar";
-import { DataGrid, GridColumns, GridRowsProp } from '@mui/x-data-grid';
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -11,6 +10,7 @@ import Button from "@material-ui/core/Button";
 
 import UserService from "../services/user.service";
 
+import MaterialTable, { Column } from "@material-table/core";
 //css imports
 require('./css/forms.css');
 
@@ -42,17 +42,16 @@ export default function Suppliers(props) {
 
     const [suppliersData, setSuppliersData] = useState([]);
     const [suppliersColumns, setSuppliersColumns] = useState([
-        { field: 'name', headerName: 'Nome', editable: true, flex: 1 },
-        { field: 'email', headerName: 'Email', editable: true, flex: 1 },
-        { field: 'phone', headerName: 'Telefone', editable: true, flex: 1 },
-        { field: 'address', headerName: 'Endereço', editable: true, flex: 1 },
-        { field: 'cnpj', headerName: 'CNPJ', editable: true, flex: 1 },
-        { field: 'corporateName', headerName: 'Razão Social', editable: true, flex: 1 },
-        { field: 'fantasyName', headerName: 'Nome Fantasia', editable: true, flex: 1 },
-        { field: 'cep', headerName: 'CEP', editable: true, flex: 1 },
-        { field: 'addressNumber', headerName: 'Número', editable: true, flex: 1 },
-        { field: 'items', headerName: 'Itens', editable: true, flex: 1 },
-    ]);
+        { field: 'name', title: 'Nome' },
+        { field: 'email', title: 'Email'},
+        { field: 'phone', title: 'Telefone' },
+        { field: 'address', title: 'Endereço'},
+        { field: 'cnpj', title: 'CNPJ' },
+        { field: 'corporateName', title: 'Razão Social' },
+        { field: 'fantasyName', title: 'Nome Fantasia' },
+        { field: 'cep', title: 'CEP'},
+        { field: 'addressNumber', title: 'Número' }
+]);
 
     const classes = useStyles();
 
@@ -102,7 +101,6 @@ export default function Suppliers(props) {
                         fantasyName: supplier.fantasyName,
                         cep: supplier.cep,
                         addressNumber: supplier.addressNumber,
-                        items: null
                     });
                 }
                 setSuppliersData(suppliers);
@@ -114,9 +112,9 @@ export default function Suppliers(props) {
     };
 
     const deleteSupplier = (id) => {
-        UserService.deleteSupplier(id).then(
+        UserService.deleteSupplier({id: id}).then(
             (response) => {
-                toast.success("Supplier deleted successfully");
+                toast.success("Forneceor deletado com sucesso");
                 getSuppliers();
             },
             (error) => {
@@ -125,10 +123,10 @@ export default function Suppliers(props) {
         );
     };
 
-    const updateSupplier = (id) => {
-        UserService.updateSupplier(id).then(
+    const updateSupplier = (data) => {
+        UserService.updateSupplier(data).then(
             (response) => {
-                toast.success("Supplier updated successfully");
+                toast.success("Fornecedor atualizado com sucesso");
                 getSuppliers();
             },
             (error) => {
@@ -223,13 +221,37 @@ export default function Suppliers(props) {
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container>
                     <Grid item xs={12}>
                         <Box className={classes.formContainer}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={12}>
-                                    <div style={{ height: 300, width: '100%' }}>
-                                        <DataGrid editMode="row" columns={suppliersColumns} rows={suppliersData} experimentalFeatures={{ newEditingApi: true }} />
+                                    <div style={{ height: 700, width: '100%' }}>
+                                        <MaterialTable title="Fornecedores" columns={suppliersColumns} data={suppliersData} 
+                                        // actions={[
+                                        //     {
+                                        //       icon: 'save',
+                                        //       tooltip: 'Save User',
+                                        //       onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                        //     }
+                                        //   ]}
+                                        editable={{
+                                            onRowDelete: selectedRow => new Promise((resolve, reject) => { 
+                                                try {
+                                                    console.log(selectedRow);
+                                                    deleteSupplier(selectedRow.id); resolve() 
+                                                }
+                                                catch(error) {
+                                                    console.log(error);
+                                                    reject();
+                                                }
+                                            }),
+                                            onRowUpdate: (updatedRow,oldRow) => new Promise((resolve, reject) => { updateSupplier(updatedRow); resolve() }),
+                                          }}
+                                          options={{
+                                            actionsColumnIndex: -1, addRowPosition: "first"
+                                          }}
+                                        />
                                     </div>
                                 </Grid>
                             </Grid>

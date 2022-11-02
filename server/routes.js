@@ -37,6 +37,16 @@ router.post('/delete-supplier', async function (req, res, next) {
         next(error);
     }
 })
+router.post('/update-supplier', async function (req, res, next) {
+    try {
+        const response = await SupplierController.updateSupplier(req.body);
+        res.status(200);
+        res.json(response);
+    }
+    catch (error) {
+        next(error);
+    }
+})
 //PRODUCT
 router.post('/create-product', async function (req, res, next) {
     try {

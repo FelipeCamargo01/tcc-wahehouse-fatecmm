@@ -14,6 +14,9 @@ class UserService {
     deleteSupplier(body) {
         return axios.post(API_URL + '/delete-supplier', body, { headers: authHeader() }).then(response => { return response.data })
     }
+    updateSupplier(body) {
+        return axios.post(API_URL + '/update-supplier', body, { headers: authHeader() }).then(response => { return response.data })
+    }
     createProduct(body) {
         return axios.post(API_URL + '/create-product', body, { headers: authHeader() }).then(response => { return response.data })
     }
