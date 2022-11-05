@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 
 import UserService from "../services/user.service";
 
-import MaterialTable, { Column } from "@material-table/core";
+import MaterialTable from "@material-table/core";
 //css imports
 require('./css/forms.css');
 
@@ -51,7 +51,7 @@ export default function Suppliers(props) {
         { field: 'fantasyName', title: 'Nome Fantasia' },
         { field: 'cep', title: 'CEP'},
         { field: 'addressNumber', title: 'Número' }
-]);
+    ]);
 
     const classes = useStyles();
 
@@ -228,13 +228,6 @@ export default function Suppliers(props) {
                                 <Grid item xs={12} sm={12}>
                                     <div style={{ height: 700, width: '100%' }}>
                                         <MaterialTable title="Fornecedores" columns={suppliersColumns} data={suppliersData} 
-                                        // actions={[
-                                        //     {
-                                        //       icon: 'save',
-                                        //       tooltip: 'Save User',
-                                        //       onClick: (event, rowData) => alert("You saved " + rowData.name)
-                                        //     }
-                                        //   ]}
                                         editable={{
                                             onRowDelete: selectedRow => new Promise((resolve, reject) => { 
                                                 try {

@@ -141,7 +141,8 @@ const Product = connection.define(
     },
     rfId: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     //lote
     batchNumber: {

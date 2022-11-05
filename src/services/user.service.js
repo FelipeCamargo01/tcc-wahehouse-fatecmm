@@ -29,11 +29,18 @@ class UserService {
     deleteProduct(body) {
         return axios.post(API_URL + '/delete-product', body, { headers: authHeader() }).then(response => { return response.data })
     }
+    updateProduct(body) {
+        return axios.post(API_URL + '/update-product', body, { headers: authHeader() }).then(response => { return response.data })
+    }
     createStockHistory(body) {
         return axios.post(API_URL + '/create-stock-history', body, { headers: authHeader() }).then(response => { return response.data })
     }
     getStockHistory() {
         return axios.post(API_URL + '/get-stock-history', { headers: authHeader() }).then(response => { return response.data })
+    }
+    getStockHistoryPerWeek() {
+        console.log(':::::::::::::GET HISTORY WEEK:::::::::::::');
+        return axios.post(API_URL + '/get-stock-history-per-week', { headers: authHeader() }).then(response => { return response.data })
     }
 }
 
