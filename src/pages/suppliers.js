@@ -43,13 +43,13 @@ export default function Suppliers(props) {
     const [suppliersData, setSuppliersData] = useState([]);
     const [suppliersColumns, setSuppliersColumns] = useState([
         { field: 'name', title: 'Nome' },
-        { field: 'email', title: 'Email'},
+        { field: 'email', title: 'Email' },
         { field: 'phone', title: 'Telefone' },
-        { field: 'address', title: 'Endereço'},
+        { field: 'address', title: 'Endereço' },
         { field: 'cnpj', title: 'CNPJ' },
         { field: 'corporateName', title: 'Razão Social' },
         { field: 'fantasyName', title: 'Nome Fantasia' },
-        { field: 'cep', title: 'CEP'},
+        { field: 'cep', title: 'CEP' },
         { field: 'addressNumber', title: 'Número' }
     ]);
 
@@ -112,7 +112,7 @@ export default function Suppliers(props) {
     };
 
     const deleteSupplier = (id) => {
-        UserService.deleteSupplier({id: id}).then(
+        UserService.deleteSupplier({ id: id }).then(
             (response) => {
                 toast.success("Forneceor deletado com sucesso");
                 getSuppliers();
@@ -221,37 +221,76 @@ export default function Suppliers(props) {
                         </Box>
                     </Grid>
                 </Grid>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Box className={classes.formContainer}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} sm={12}>
-                                    <div style={{ height: 700, width: '100%' }}>
-                                        <MaterialTable title="Fornecedores" columns={suppliersColumns} data={suppliersData} 
+            </>)
+    }
+
+    const renderSuppliersData = () => {
+        return <>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Box className={classes.formContainer}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={12}>
+                                <div style={{ height: 700, width: '100%' }}>
+                                    <MaterialTable title="Fornecedores" columns={suppliersColumns} data={suppliersData}
+                                        // other props
+                                        localization={{
+                                            pagination: {
+                                                labelRowsSelect: 'linhas',
+                                                labelDisplayedRows: '{count} de {from}-{to}',
+                                                firstTooltip: 'Primeira página',
+                                                previousTooltip: 'Página anterior',
+                                                nextTooltip: 'Próxima página',
+                                                lastTooltip: 'Última página'
+                                            },
+                                            toolbar: {
+                                                nRowsSelected: '{0} linhas(s) selecionadas',
+                                                searchTooltip: 'Pesquisar',
+                                                searchPlaceholder: 'Pesquisar'
+                                            },
+                                            header: {
+                                                actions: 'Ações'
+                                            },
+                                            body: {
+                                                emptyDataSourceMessage: 'Nenhum registro para exibir',
+                                                filterRow: {
+                                                    filterTooltip: 'Filtro'
+                                                },
+                                                editRow: {
+                                                    deleteText: 'Tem certeza que deseja deletar este registro?',
+                                                    cancelTooltip: 'Cancelar',
+                                                    saveTooltip: 'Salvar'
+                                                },
+                                                addTooltip: 'Adicionar',
+                                                deleteTooltip: 'Deletar',
+                                                editTooltip: 'Editar'
+
+                                            }
+                                        }}
                                         editable={{
-                                            onRowDelete: selectedRow => new Promise((resolve, reject) => { 
+                                            onRowDelete: selectedRow => new Promise((resolve, reject) => {
                                                 try {
                                                     console.log(selectedRow);
-                                                    deleteSupplier(selectedRow.id); resolve() 
+                                                    deleteSupplier(selectedRow.id); resolve()
                                                 }
-                                                catch(error) {
+                                                catch (error) {
                                                     console.log(error);
                                                     reject();
                                                 }
                                             }),
-                                            onRowUpdate: (updatedRow,oldRow) => new Promise((resolve, reject) => { updateSupplier(updatedRow); resolve() }),
-                                          }}
-                                          options={{
+                                            onRowUpdate: (updatedRow, oldRow) => new Promise((resolve, reject) => { updateSupplier(updatedRow); resolve() }),
+                                        }}
+                                        options={{
                                             actionsColumnIndex: -1, addRowPosition: "first"
-                                          }}
-                                        />
-                                    </div>
-                                </Grid>
+                                        }}
+                                    />
+                                </div>
                             </Grid>
-                        </Box>
-                    </Grid>
+                        </Grid>
+                    </Box>
                 </Grid>
-            </>)
+            </Grid>
+        </>
     }
 
     return (
@@ -259,6 +298,7 @@ export default function Suppliers(props) {
             <Navbar />
             <ToastContainer />
             {renderSuppliersForm()}
+            {renderSuppliersData()}
         </div>
     );
 }

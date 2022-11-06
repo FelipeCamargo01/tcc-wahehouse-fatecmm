@@ -49,14 +49,14 @@ export default function Product(props) {
   const [productSuppliers, setProductSuppliers] = useState([]);
 
   const [productsData, setProductsData] = useState([]);
-    const [productsColumns, setSuppliersColumns] = useState([
-        { title: "Nome", field: "name" },
-        { title: "SKU", field: "sku", editable: false },
-        { title: "Preço", field: "price" },
-        { title: "Fornecedor", field: "supplier", productSuppliers },
-        { title: "RFID", field: "rfId" },
-        { title: "Lote", field: "batchNumber" },
-        { title: "Descrição", field: "description" },
+  const [productsColumns, setSuppliersColumns] = useState([
+    { title: "Nome", field: "name" },
+    { title: "SKU", field: "sku", editable: false },
+    { title: "Preço", field: "price" },
+    { title: "Fornecedor", field: "supplier", productSuppliers },
+    { title: "RFID", field: "rfId" },
+    { title: "Lote", field: "batchNumber" },
+    { title: "Descrição", field: "description" },
   ]);
 
   const [searchProductSuppliersOptions, setSearchProductSuppliersOptions] = useState([]);
@@ -72,7 +72,7 @@ export default function Product(props) {
   }, []);
 
   const createProduct = (event) => {
-    event.preventDefault();    
+    event.preventDefault();
     UserService.createProduct({
       name: productName,
       SKU: productSKU,
@@ -102,7 +102,7 @@ export default function Product(props) {
     setProductItems([]);
     let products = [];
     UserService.getProducts().then((response) => {
-      for(let i = 0; i < response.data.length; i++) {
+      for (let i = 0; i < response.data.length; i++) {
         products.push({
           id: response.data[i].id,
           name: response.data[i].name,
@@ -193,7 +193,7 @@ export default function Product(props) {
                       name="productPrice"
                       id="productPrice"
                       onChange={(e) =>
-                        setProductPrice(Number(e.target.value.replace(/\D/g,'')))
+                        setProductPrice(Number(e.target.value.replace(/\D/g, '')))
                       }
                       placeholder="PREÇO"
                     />
@@ -289,45 +289,82 @@ export default function Product(props) {
             </Box>
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box className={classes.formContainer}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12}>
-                  <div style={{ height: 700, width: '100%' }}>
-                    <MaterialTable title="Produtos" columns={productsColumns} data={productsData}
-                      editable={{
-                        onRowDelete: selectedRow => new Promise((resolve, reject) => {
-                          try {
-                            console.log(selectedRow);
-                            deleteProduct(selectedRow.sku); resolve()
-                          }
-                          catch (error) {
-                            reject();
-                          }
-                        }),
-                        onRowUpdate: (updatedRow, oldRow) => new Promise((resolve, reject) => { updateProduct(updatedRow); resolve() }),
-                      }}
-                      options={{
-                        actionsColumnIndex: -1, addRowPosition: "first"
-                      }}
-                    />
-                  </div>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
       </>
     );
   };
 
-  const renderProductData = () => { };
+  const renderProductData = () => {
+    return <>
+      <Grid container>
+        <Grid item xs={12}>
+          <Box className={classes.formContainer}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12}>
+                <div style={{ height: 700, width: '100%' }}>
+                  <MaterialTable title="Produtos" columns={productsColumns} data={productsData}
+                    localization={{
+                      pagination: {
+                        labelRowsSelect: 'linhas',
+                        labelDisplayedRows: '{count} de {from}-{to}',
+                        firstTooltip: 'Primeira página',
+                        previousTooltip: 'Página anterior',
+                        nextTooltip: 'Próxima página',
+                        lastTooltip: 'Última página'
+                      },
+                      toolbar: {
+                        nRowsSelected: '{0} linhas(s) selecionadas',
+                        searchTooltip: 'Pesquisar',
+                        searchPlaceholder: 'Pesquisar'
+                      },
+                      header: {
+                        actions: 'Ações'
+                      },
+                      body: {
+                        emptyDataSourceMessage: 'Nenhum registro para exibir',
+                        filterRow: {
+                          filterTooltip: 'Filtro'
+                        },
+                        editRow: {
+                          deleteText: 'Tem certeza que deseja deletar este registro?',
+                          cancelTooltip: 'Cancelar',
+                          saveTooltip: 'Salvar'
+                        },
+                        addTooltip: 'Adicionar',
+                        deleteTooltip: 'Deletar',
+                        editTooltip: 'Editar'
+
+                      }
+                    }}
+                    editable={{
+                      onRowDelete: selectedRow => new Promise((resolve, reject) => {
+                        try {
+                          console.log(selectedRow);
+                          deleteProduct(selectedRow.sku); resolve()
+                        }
+                        catch (error) {
+                          reject();
+                        }
+                      }),
+                      onRowUpdate: (updatedRow, oldRow) => new Promise((resolve, reject) => { updateProduct(updatedRow); resolve() }),
+                    }}
+                    options={{
+                      actionsColumnIndex: -1, addRowPosition: "first"
+                    }}
+                  />
+                </div>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
+  };
 
   return (
     <>
       <Navbar />
       {renderProductForm()}
+      {renderProductData()}
     </>
   );
 }

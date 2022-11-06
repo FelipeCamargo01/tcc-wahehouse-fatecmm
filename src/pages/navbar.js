@@ -169,7 +169,6 @@ export default function Navbar(props) {
           <Button id="Home" onClick={() => { navigateTo(''); onChangeScreenClick('Home') }} color="inherit">Home</Button>
           <Button id="Fornecedores" onClick={() => { navigateTo('suppliers') }} color="inherit">Fornecedores</Button>
           <Button id="Produtos" onClick={() => { navigateTo('products') }} color="inherit">Produtos</Button>
-          <Button id="Movimentação" onClick={() => { onChangeScreenClick('Movimentação') }} color="inherit">Movimentações</Button>
         </Box>
       );
     } else {
