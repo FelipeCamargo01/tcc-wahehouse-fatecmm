@@ -11,44 +11,31 @@ import Box from "@material-ui/core/Box";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  ListItemIcon,
+} from "@material-ui/core";
+
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleAlt from "@material-ui/icons/PeopleAlt";
+import ListAlt from "@material-ui/icons/ListAlt";
+import { Link } from "react-router-dom";
 
 require("./css/navbar.css");
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  navbarColor: {
-    backgroundColor: "#00C1F5",
-  },
-  title: {
-    fontWeight: "bold",
-    flexGrow: 1,
-  },
-  loginButton: {
-    "&:hover": {
-      border: "1px solid #E9E9EB",
-      //   backgroundColor: "white",
-    },
-    width: "150px",
-    fontSize: "15px",
-    borderRadius: "10px",
-    color: "white",
-    border: "1px solid white",
-  },
-  linkStyle: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "bold",
-    "&:hover": {
-      color: "#E9E9EB",
-    },
-  },
   profileName: {
     cursor: "pointer",
+  },
+  drawer: {
+    width: 240,
+  },
+  drawerPaper: {
+    width: 240,
   },
 }));
 
@@ -105,8 +92,7 @@ export default function Navbar(props) {
               variant="h6"
               className={classes.profileName}
               component="h6"
-              onClick={handleClick}
-            >
+              onClick={handleClick}>
               {user?.firstName} {user?.lastName}
             </Typography>
           </Box>
@@ -122,8 +108,7 @@ export default function Navbar(props) {
               style: {
                 width: "20ch",
               },
-            }}
-          >
+            }}>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Box>
@@ -133,8 +118,7 @@ export default function Navbar(props) {
         <Button
           variant="outlined"
           onClick={onClickSignIn}
-          className={classes.loginButton}
-        >
+          className={classes.loginButton}>
           <a className={classes.linkStyle} href="/signin">
             Login
           </a>
@@ -143,56 +127,36 @@ export default function Navbar(props) {
     }
   };
 
-  const onChangeScreenClick = (screen) => {
-    // props.onChangeScreen(screen);
-    removeRemoveActiveButton();
-    setActiveButton(screen);
-  }
-
-  const removeRemoveActiveButton = () => {
-    let parentElement = document.getElementById("buttons-list");
-    let childElements = parentElement.children;
-    
-    for (let i = 0; i < childElements.length; i++) {
-      childElements[i].classList.remove("active");
-    }
-  }
-
-  const setActiveButton = (button) => {
-    document.getElementById(button).classList.add("active");
-  }
-
-  const renderMenuButtons = () => {
-    if (isLogged) {
-      return (
-        <Box id="buttons-list">
-          <Button id="Home" onClick={() => { navigateTo(''); onChangeScreenClick('Home') }} color="inherit">Home</Button>
-          <Button id="Fornecedores" onClick={() => { navigateTo('suppliers') }} color="inherit">Fornecedores</Button>
-          <Button id="Produtos" onClick={() => { navigateTo('products') }} color="inherit">Produtos</Button>
-          <Button id="Movimentação" onClick={() => { onChangeScreenClick('Movimentação') }} color="inherit">Movimentações</Button>
-        </Box>
-      );
-    } else {
-      return;
-    }
-  };
-
-  const navigateTo = (screen) =>{
-    history.push({
-      pathname: `/${screen}`,
-    });
-  }
-
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.navbarColor} position="static">
-        <Toolbar>
-          <Grid justify="space-between" container>
-            <Grid item>{renderMenuButtons()}</Grid>
-            <Grid item>{renderLogin()}</Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <Drawer
+      className={classes.drawer}
+      variant="permanent"
+      anchor="left"
+      classes={{ paper: classes.drawerPaper }}>
+      <List>
+        <ListItem>
+          <ListItemText primary={renderLogin()} />
+        </ListItem>
+        <Divider />
+        <ListItem button component={Link} to={"/"}>
+          <ListItemIcon>
+            <DashboardIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+        <ListItem button component={Link} to={"/products"}>
+          <ListItemIcon>
+            <ListAlt color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Produtos" />
+        </ListItem>
+        <ListItem button component={Link} to={"/suppliers"}>
+          <ListItemIcon>
+            <PeopleAlt color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Fornecedores" />
+        </ListItem>
+      </List>
+    </Drawer>
   );
 }

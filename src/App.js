@@ -1,20 +1,23 @@
-import './App.css';
+import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Routes,
 } from "react-router-dom";
+import { Paper } from "@material-ui/core";
 
-import SignIn from './pages/signIn';
-import SignUp from './pages/signUp';
-import Home from './pages/home';
-import Products from './pages/products';
-import Suppliers from './pages/suppliers';
+import SignIn from "./pages/signIn";
+import SignUp from "./pages/signUp";
+import Home from "./pages/home";
+import Products from "./pages/products";
+import Suppliers from "./pages/suppliers";
 
 function App() {
   return (
-    <Router>
-      <Switch>
+    <Paper style={{ height: "100vh" }}>
+      <Router>
+        <Switch>
           <Route exact path="/signIn">
             <SignIn />
           </Route>
@@ -27,11 +30,12 @@ function App() {
           <Route exact path="/suppliers">
             <Suppliers />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>
-    </Router>
+      </Router>
+    </Paper>
   );
 }
 

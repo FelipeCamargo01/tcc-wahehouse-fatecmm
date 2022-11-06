@@ -13,28 +13,7 @@ import AuthService from "../services/auth.service";
 import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 export default function SignUp(props) {
-  const classes = useStyles();
   const history = useHistory();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
@@ -42,12 +21,12 @@ export default function SignUp(props) {
   const [password, setPassword] = useState();
 
   React.useEffect(() => {
-    if(localStorage.getItem('user') != null) {
+    if (localStorage.getItem("user") != null) {
       history.push({
         pathname: "/",
       });
     }
-  })
+  });
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -80,97 +59,85 @@ export default function SignUp(props) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+    <Container maxWidth="sm" style={{ paddingTop: "5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}>
+        <Typography
+          marginBottom={"3rem"}
+          textAlign="center"
+          component="h1"
+          variant="h5">
           Cadastre-se
         </Typography>
-        <form className={classes.form} onSubmit={onSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+        <form onSubmit={onSubmit}>
+          <Grid container spacing={2} xs={12}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
-                required
-                fullWidth
-                id="firstName"
                 label="Nome"
+                fullWidth
+                size="small"
                 autoFocus
-                onChange={(e) => setFirstName(e.target.value)}
-              />
+                required
+                onChange={(e) => setFirstName(e.target.value)}></TextField>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
-                fullWidth
-                id="lastName"
                 label="Sobrenome"
-                name="lastName"
-                autoComplete="lname"
-                onChange={(e) => setLastName(e.target.value)}
-              />
+                fullWidth
+                size="small"
+                required
+                onChange={(e) => setLastName(e.target.value)}></TextField>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                 variant="outlined"
-                required
+                label="E-mail"
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
+                size="small"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+                required
+                onChange={(e) => setEmail(e.target.value)}></TextField>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                 variant="outlined"
-                required
-                fullWidth
-                name="password"
                 label="Senha"
-                type="password"
-                id="password"
+                fullWidth
+                size="small"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+                required
+                onChange={(e) => setPassword(e.target.value)}></TextField>
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Cadastre-se
-          </Button>
-          <Grid container justifyContent="center">
+
+          <Grid container spacing={2} direction="row" justifyContent="center">
             <Grid item>
-              <Link href="/signin" variant="body2">
-                Já tem uma conta? Faça login!
-              </Link>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disableElevation>
+                Cadastrar
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                href="/signin"
+                variant="contained"
+                color="inherit"
+                disableElevation>
+                Cancelar
+              </Button>
             </Grid>
           </Grid>
         </form>
       </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 }
