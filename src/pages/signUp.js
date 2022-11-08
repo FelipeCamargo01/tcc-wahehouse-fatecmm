@@ -59,85 +59,83 @@ export default function SignUp(props) {
   };
 
   return (
-    <Container maxWidth="sm" style={{ paddingTop: "5rem" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
-        <Typography
-          marginBottom={"3rem"}
-          textAlign="center"
-          component="h1"
-          variant="h5">
-          Cadastre-se
-        </Typography>
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={2} xs={12}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                label="Nome"
-                fullWidth
-                size="small"
-                autoFocus
-                required
-                onChange={(e) => setFirstName(e.target.value)}></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                label="Sobrenome"
-                fullWidth
-                size="small"
-                required
-                onChange={(e) => setLastName(e.target.value)}></TextField>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                variant="outlined"
-                label="E-mail"
-                fullWidth
-                size="small"
-                autoComplete="email"
-                required
-                onChange={(e) => setEmail(e.target.value)}></TextField>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                variant="outlined"
-                label="Senha"
-                fullWidth
-                size="small"
-                autoComplete="current-password"
-                required
-                onChange={(e) => setPassword(e.target.value)}></TextField>
-            </Grid>
+    <Container maxWidth="sm" align="center" style={{ paddingTop: "5rem" }}>
+      <Typography
+        textAlign="center"
+        component="h1"
+        variant="h5"
+        style={{ marginBottom: "2rem" }}>
+        Cadastre-se
+      </Typography>
+      <form onSubmit={onSubmit}>
+        <Grid
+          container
+          spacing={2}
+          xs={12}
+          alignItems="center"
+          style={{ marginBottom: "2rem" }}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              label="Nome"
+              fullWidth
+              size="small"
+              autoFocus
+              required
+              onChange={(e) => setFirstName(e.target.value)}></TextField>
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              label="Sobrenome"
+              fullWidth
+              size="small"
+              required
+              onChange={(e) => setLastName(e.target.value)}></TextField>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              label="E-mail"
+              fullWidth
+              size="small"
+              autoComplete="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}></TextField>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              label="Senha"
+              fullWidth
+              size="small"
+              autoComplete="current-password"
+              required
+              onChange={(e) => setPassword(e.target.value)}></TextField>
+          </Grid>
+        </Grid>
 
-          <Grid container spacing={2} direction="row" justifyContent="center">
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disableElevation>
-                Cadastrar
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                href="/signin"
-                variant="contained"
-                color="inherit"
-                disableElevation>
-                Cancelar
-              </Button>
-            </Grid>
+        <Grid container spacing={2} direction="row" justifyContent="center">
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation>
+              Cadastrar
+            </Button>
           </Grid>
-        </form>
-      </div>
+          <Grid item>
+            <Button
+              href="/signin"
+              variant="contained"
+              color="inherit"
+              disableElevation>
+              Cancelar
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </Container>
   );
 }

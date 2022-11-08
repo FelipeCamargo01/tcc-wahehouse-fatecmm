@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: 240,
   },
+  linkStyle: {
+    textDecoration: "none",
+    color: "#E9E9EB",
+  },
 }));
 
 export default function Navbar(props) {
@@ -65,9 +69,7 @@ export default function Navbar(props) {
 
   const onClickSignIn = () => {
     props.onLogin();
-    history.push({
-      pathname: "/signin",
-    });
+    history.push("/signin");
   };
 
   const handleClick = (event) => {
@@ -107,6 +109,8 @@ export default function Navbar(props) {
             PaperProps={{
               style: {
                 width: "20ch",
+                backgroundColor: "orange",
+                color: "#E9E9EB",
               },
             }}>
             <MenuItem onClick={logout}>Logout</MenuItem>
@@ -116,10 +120,11 @@ export default function Navbar(props) {
     } else {
       return (
         <Button
-          variant="outlined"
-          onClick={onClickSignIn}
-          className={classes.loginButton}>
-          <a className={classes.linkStyle} href="/signin">
+          color="primary"
+          variant="contained"
+          disableElevation
+          onClick={onClickSignIn}>
+          <a className={classes.linkStyle} href="/signIn">
             Login
           </a>
         </Button>
@@ -127,36 +132,57 @@ export default function Navbar(props) {
     }
   };
 
-  return (
-    <Drawer
-      className={classes.drawer}
-      variant="permanent"
-      anchor="left"
-      classes={{ paper: classes.drawerPaper }}>
-      <List>
-        <ListItem>
-          <ListItemText primary={renderLogin()} />
-        </ListItem>
-        <Divider />
-        <ListItem button component={Link} to={"/"}>
-          <ListItemIcon>
-            <DashboardIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem button component={Link} to={"/products"}>
-          <ListItemIcon>
-            <ListAlt color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Produtos" />
-        </ListItem>
-        <ListItem button component={Link} to={"/suppliers"}>
-          <ListItemIcon>
-            <PeopleAlt color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="Fornecedores" />
-        </ListItem>
-      </List>
-    </Drawer>
-  );
+  const renderDrawer = () => {
+    if (isLogged) {
+      return (
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          anchor="left"
+          classes={{ paper: classes.drawerPaper }}>
+          <List>
+            <ListItem>
+              <ListItemText primary={renderLogin()} />
+            </ListItem>
+            <Divider />
+            <ListItem button component={Link} to={"/"}>
+              <ListItemIcon>
+                <DashboardIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+            <ListItem button component={Link} to={"/products"}>
+              <ListItemIcon>
+                <ListAlt color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Produtos" />
+            </ListItem>
+            <ListItem button component={Link} to={"/suppliers"}>
+              <ListItemIcon>
+                <PeopleAlt color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Fornecedores" />
+            </ListItem>
+          </List>
+        </Drawer>
+      );
+    } else {
+      return (
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          anchor="left"
+          classes={{ paper: classes.drawerPaper }}>
+          <List>
+            <ListItem>
+              <ListItemText primary={renderLogin()} />
+            </ListItem>
+            <Divider />
+          </List>
+        </Drawer>
+      );
+    }
+  };
+
+  return <>{renderDrawer()}</>;
 }

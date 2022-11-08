@@ -112,69 +112,69 @@ export default function SignIn() {
     //     <Box mt={4}>{renderErrorLogin()}</Box>
     //   </div>
     // </Container>
-    <Container maxWidth="sm" style={{ paddingTop: "5rem" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
-        <Typography
-          marginBottom={"3rem"}
-          textAlign="center"
-          component="h1"
-          variant="h5">
-          Faça seu Login
-        </Typography>
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={2} xs={12} marginBottom={"1rem"}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                label="E-mail"
-                fullWidth
-                id="email"
-                size="small"
-                autoComplete="email"
-                autoFocus
-                required
-                onChange={(e) => setEmail(e.target.value)}></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                label="Senha"
-                type="password"
-                fullWidth
-                id="password"
-                size="small"
-                autoComplete="current-password"
-                required
-                onChange={(e) => setPassword(e.target.value)}></TextField>
-            </Grid>
+    <Container maxWidth="sm" align="center" style={{ paddingTop: "5rem" }}>
+      <Typography
+        marginBottom={"3rem"}
+        align="center"
+        component="h1"
+        variant="h5"
+        style={{ marginBottom: "2rem" }}>
+        Faça seu Login
+      </Typography>
+      <form onSubmit={onSubmit}>
+        <Grid
+          container
+          spacing={2}
+          xs={12}
+          alignItems="center"
+          style={{ marginBottom: "2rem" }}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              label="E-mail"
+              fullWidth
+              id="email"
+              size="small"
+              autoComplete="email"
+              autoFocus
+              required
+              onChange={(e) => setEmail(e.target.value)}></TextField>
           </Grid>
-          <Grid container spacing={2} direction="row" justifyContent="center">
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disableElevation>
-                login
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                href="/signup"
-                variant="contained"
-                color="inherit"
-                disableElevation>
-                cadastrar
-              </Button>
-            </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              label="Senha"
+              type="password"
+              fullWidth
+              id="password"
+              size="small"
+              autoComplete="current-password"
+              required
+              onChange={(e) => setPassword(e.target.value)}></TextField>
           </Grid>
-        </form>
-      </div>
+        </Grid>
+        <Grid container spacing={2} direction="row" justifyContent="center">
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation>
+              login
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              href="/signup"
+              variant="contained"
+              color="inherit"
+              disableElevation>
+              cadastrar
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+
       <Box mt={4}>{renderErrorLogin()}</Box>
     </Container>
   );
