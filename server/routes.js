@@ -68,6 +68,26 @@ router.post('/get-products', async function (req, res, next) {
         next(error);
     }
 })
+router.post('/delete-product', async function (req, res, next) {
+    try {
+        const response = await ProductController.deleteProduct(req.body);
+        res.status(200);
+        res.json(response);
+    }
+    catch (error) {
+        next(error);
+    }
+})
+router.post('/update-product', async function (req, res, next) {
+    try {
+        const response = await ProductController.updateProducts(req.body);
+        res.status(200);
+        res.json(response);
+    }
+    catch (error) {
+        next(error);
+    }
+})
 router.post('/get-product-infos', async function (req, res, next) {
     try {
         const response = await ProductController.getProductInfos();
@@ -89,6 +109,16 @@ router.post('/delete-product', async function (req, res, next) {
     }
 })
 //STOCK HISTORY
+router.post('/get-stock-history-per-week', async function(req, res, next) {
+    try {
+        const response = await StockHistoryController.getStockHistoryPerWeek();
+        res.status(200);
+        res.json(response);
+    }
+    catch (error) {
+        next(error);
+    }
+})
 router.post('/create-stock-history', async function (req, res, next) {
     try {
         const response = await StockHistoryController.createStockHistory(req.body);
@@ -109,5 +139,5 @@ router.post('/get-stock-history', async function (req, res, next) {
         next(error);
     }
 })
-
+router.post('/');
 module.exports = router;

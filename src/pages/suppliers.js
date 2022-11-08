@@ -19,6 +19,7 @@ import UserService from "../services/user.service";
 
 import MaterialTable, { Column } from "@material-table/core";
 import InputMask, { ReactInputMask } from "react-input-mask";
+
 //css imports
 require("./css/forms.css");
 

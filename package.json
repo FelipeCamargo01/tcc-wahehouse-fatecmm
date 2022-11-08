@@ -21,7 +21,7 @@
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
     "pg": "^8.8.0",
@@ -34,7 +34,9 @@
     "react-select-search": "^4.1.2",
     "react-toastify": "^8.1.0",
     "sequelize": "^6.8.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "zingchart": "^2.9.10",
+    "zingchart-react": "^3.1.4"
   },
   "scripts": {
     "start": "concurrently --kill-others \"react-scripts start\" \"nodemon -L --trace-warnings server/server.js\"",

@@ -4,10 +4,13 @@ import Navbar from "./navbar";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CurrencyInput from "react-currency-input-field";
+
 import SelectSearch, { useSelect } from "react-select-search";
 import "react-select-search/style.css";
 
 import { toast, ToastContainer } from "react-toastify";
+
+import MaterialTable from "@material-table/core";
 
 import UserService from "../services/user.service";
 
@@ -57,6 +60,17 @@ export default function Product(props) {
   const [productInfos, setProductInfos] = useState([]);
   const [productSuppliers, setProductSuppliers] = useState([]);
 
+  const [productsData, setProductsData] = useState([]);
+  const [productsColumns, setSuppliersColumns] = useState([
+    { title: "Nome", field: "name" },
+    { title: "SKU", field: "sku", editable: false },
+    { title: "Preço", field: "price" },
+    { title: "Fornecedor", field: "supplier", productSuppliers },
+    { title: "RFID", field: "rfId" },
+    { title: "Lote", field: "batchNumber" },
+    { title: "Descrição", field: "description" },
+  ]);
+
   const [searchProductSuppliersOptions, setSearchProductSuppliersOptions] =
     useState([]);
 
@@ -83,6 +97,7 @@ export default function Product(props) {
   useEffect(() => {
     async function fetchData() {
       await getProductSuppliers();
+      await getProducts();
     }
     fetchData();
   }, []);
@@ -93,7 +108,9 @@ export default function Product(props) {
       name: productName,
       SKU: productSKU,
       price: productPrice,
-      supplierId: productSupplierId,
+
+      supplierId: selectedProductSupplier,
+
       description: productDescription,
       rfId: productRfId,
       batchNumber: productBatchNumber,
@@ -116,14 +133,26 @@ export default function Product(props) {
 
   const getProducts = () => {
     setProductItems([]);
+    let products = [];
     UserService.getProducts().then((response) => {
-      setProductItems(response.data);
+      for (let i = 0; i < response.data.length; i++) {
+        products.push({
+          id: response.data[i].id,
+          name: response.data[i].name,
+          sku: response.data[i].SKU,
+          price: response.data[i].price,
+          supplier: response.data[i]["supplier.name"],
+          rfId: response.data[i].rfId,
+          batchNumber: response.data[i].batchNumber,
+          description: response.data[i].description,
+        });
+      }
+      setProductsData(products);
     });
   };
 
   const getProductSuppliers = () => {
     UserService.getSuppliers().then((response) => {
-      console.log(response.data);
       setProductSuppliers(response.data);
       let productSuppliersOptions = [];
       for (const supplier of response.data) {
@@ -134,7 +163,20 @@ export default function Product(props) {
       }
 
       setSearchProductSuppliersOptions(productSuppliersOptions);
-      console.log(searchProductSuppliersOptions);
+    });
+  };
+
+  const deleteProduct = (sku) => {
+    UserService.deleteProduct({ sku: sku }).then((response) => {
+      toast.success(response.data);
+      getProducts();
+    });
+  };
+
+  const updateProduct = (data) => {
+    UserService.updateProduct(data).then((response) => {
+      toast.success(response.data);
+      getProducts();
     });
   };
 
@@ -408,7 +450,83 @@ export default function Product(props) {
     }
   };
 
-  const renderProductData = () => {};
+  const renderProductData = () => {
+    return (
+      <>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box className={classes.formContainer}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={12}>
+                  <div style={{ height: 700, width: "100%" }}>
+                    <MaterialTable
+                      title="Produtos"
+                      columns={productsColumns}
+                      data={productsData}
+                      localization={{
+                        pagination: {
+                          labelRowsSelect: "linhas",
+                          labelDisplayedRows: "{count} de {from}-{to}",
+                          firstTooltip: "Primeira página",
+                          previousTooltip: "Página anterior",
+                          nextTooltip: "Próxima página",
+                          lastTooltip: "Última página",
+                        },
+                        toolbar: {
+                          nRowsSelected: "{0} linhas(s) selecionadas",
+                          searchTooltip: "Pesquisar",
+                          searchPlaceholder: "Pesquisar",
+                        },
+                        header: {
+                          actions: "Ações",
+                        },
+                        body: {
+                          emptyDataSourceMessage: "Nenhum registro para exibir",
+                          filterRow: {
+                            filterTooltip: "Filtro",
+                          },
+                          editRow: {
+                            deleteText:
+                              "Tem certeza que deseja deletar este registro?",
+                            cancelTooltip: "Cancelar",
+                            saveTooltip: "Salvar",
+                          },
+                          addTooltip: "Adicionar",
+                          deleteTooltip: "Deletar",
+                          editTooltip: "Editar",
+                        },
+                      }}
+                      editable={{
+                        onRowDelete: (selectedRow) =>
+                          new Promise((resolve, reject) => {
+                            try {
+                              console.log(selectedRow);
+                              deleteProduct(selectedRow.sku);
+                              resolve();
+                            } catch (error) {
+                              reject();
+                            }
+                          }),
+                        onRowUpdate: (updatedRow, oldRow) =>
+                          new Promise((resolve, reject) => {
+                            updateProduct(updatedRow);
+                            resolve();
+                          }),
+                      }}
+                      options={{
+                        actionsColumnIndex: -1,
+                        addRowPosition: "first",
+                      }}
+                    />
+                  </div>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
 
   return (
     <Box display="flex" flexDirection="row">
@@ -419,6 +537,7 @@ export default function Product(props) {
         maxWidth="xl"
         align="center">
         {renderProductForm()}
+        {renderProductData()}
       </Container>
     </Box>
   );

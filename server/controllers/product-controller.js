@@ -1,13 +1,11 @@
 const { Product, Supplier, StockHistory } = require('../../models/models');
-// const Product = require("../../models/product");
-// const Supplier = require("../../models/supplier");
-// const StockHistory = require("../../models/stock-history");
 const sequelize = require('sequelize');
 const ResponseParse = require("../utils/response-parse");
 const { Op } = require("sequelize");
 
 class ProductController {
     static async createProduct(body) {
+        console.log(body);
         await Product.create({
             name: body.name,
             SKU: body.SKU,
@@ -31,10 +29,31 @@ class ProductController {
     }
 
     static async deleteProduct(body) {
-        await StockHistory.destroy({ where: { productId: body.productId } });
-        await Product.destroy({where: {Id: body.productId}});
+        console.log(body);
+        await StockHistory.destroy({ where: { productId: body.sku } });
+        await Product.destroy({where: {SKU: body.sku}});
 
         return ResponseParse.response('OK', "Produto deletado com sucesso!");
+    }
+
+    static async updateProducts(body) {
+        await Product.update(
+            {
+                name: body.name,
+                price: body.price,
+                supplierId: body.supplierId,
+                description: body.description,
+                rfId: body.rfId,
+                batchNumber: body.batchNumber,
+            },
+            {
+                where: {
+                    SKU: body.sku
+                }
+            }
+        );
+
+        return ResponseParse.response("OK", 'Produto atualizado com sucesso!');
     }
 
     static async getProductInfos() {
