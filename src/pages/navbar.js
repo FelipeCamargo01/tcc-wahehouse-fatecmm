@@ -93,7 +93,7 @@ export default function Navbar(props) {
 
   const logout = () => {
     localStorage.removeItem("user");
-    props.onLogout();
+    window.location.reload(true)
   };
 
   const renderLogin = () => {

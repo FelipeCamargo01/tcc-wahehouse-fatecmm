@@ -180,12 +180,7 @@ export default function Home() {
   useEffect(() => {
     zingchart.exec('inputChart', 'setseriesvalues', { values: [inputStockMovimentation] });
     zingchart.exec('outputChart', 'setseriesvalues', { values: [outputStockMovimentation] });
-    console.log('capacity');
-    console.log((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0)));
-    console.log(((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0))/process.env.REACT_APP_WAREHOUSE_CAPACITY)*100);
-    console.log(process.env.REACT_APP_WAREHOUSE_CAPACITY)
     let percentualValue = ((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0))/process.env.REACT_APP_WAREHOUSE_CAPACITY)*100;
-    console.log('percentualValue', Math.round(percentualValue));
     zingchart.exec('gaugeChart', 'setseriesvalues', { values: [[percentualValue]] });
   }, [inputStockMovimentation, outputStockMovimentation]);
 
