@@ -20,7 +20,7 @@ connection
 //.ENV CONFIGS
 require('dotenv').config();
 
-const PORT = process.env.SERVER_PORT
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 app.use(cors());
