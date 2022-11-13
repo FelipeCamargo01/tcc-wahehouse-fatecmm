@@ -3,9 +3,6 @@ const cors = require('cors')
 const path = require('path');
 const connection = require('../database/database');
 
-const routes = require('./routes.js');
-const authRoutes = require('./auth/auth.routes');
-
 //DATABASE
 connection
    .authenticate()
@@ -35,8 +32,8 @@ app.use(function(req, res, next) {
   next();
 })
 
-const apiRoutes = express.Router();
-const authRoutes = express.Router();
+const api = express.Router();
+const auth = express.Router();
 apiRoutes.use("/api", require('./routes');
 authRoutes.use("auth", require('./auth/auth.routes');
 
