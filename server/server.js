@@ -21,7 +21,8 @@ connection
 console.log("1");
 require('dotenv').config();
 console.log("2");
-const PORT = process.env.SERVER_PORT:8080
+const PORT = process.env.SERVER_PORT || 8080
+console.log(PORT);
 console.log("3");
 const app = express();
 console.log("4");
