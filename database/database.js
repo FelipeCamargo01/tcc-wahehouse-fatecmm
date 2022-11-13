@@ -10,7 +10,6 @@ const connection = new Sequelize(process.env.DATABASE_URL, {
          rejectUnauthorized: false
       }
     },
-    },
     models: [__dirname + '/models'],
     pool: {
         max: 10,
