@@ -53,6 +53,12 @@ app.use((error, req, res, next) => {
 // MODELS
 const { User, Product, StockHistory, Supplier } = require('../models/models');
 
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
+  });
+}
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
