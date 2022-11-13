@@ -50,7 +50,7 @@ app.use((error, req, res, next) => {
   })
 });
 // MODELS
-const { User, Product, StockHistory, Supplier } = require('../models/models');
+
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     console.log('to index.html');
