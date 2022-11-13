@@ -31,17 +31,6 @@ app.use(express.json());
 console.log("6");
 app.use(express.static(path.join(__dirname, 'build')));
 console.log("7");
-app.use(function(req, res, next) {
-  console.log("8");
-  res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-  );
-  console.log("9");
-  next();
-  console.log("10");
-})
-
 console.log("11");
 app.use('/api/', routes);
 console.log("12");
