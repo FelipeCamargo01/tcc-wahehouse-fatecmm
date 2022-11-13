@@ -3,8 +3,6 @@ const cors = require('cors')
 const path = require('path');
 const connection = require('../database/database');
 
-const connection = require('../database/database');
-
 //DATABASE
 connection
    .authenticate()
