@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '/../build')));
 
 app.use('/api/auth/', authRoutes);
 app.use(function(req, res, next) {
