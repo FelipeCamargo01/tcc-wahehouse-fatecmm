@@ -3,8 +3,7 @@ const cors = require('cors')
 const path = require('path');
 const connection = require('../database/database');
 
-const routes = require('./routes.js');
-const authRoutes = require('./auth/auth.routes');
+const connection = require('../database/database');
 
 //DATABASE
 connection
@@ -18,15 +17,15 @@ connection
    });
 
 //.ENV CONFIGS
-
 require('dotenv').config();
-const PORT = process.env.SERVER_PORT || 8080
+
+const PORT = process.env.SERVER_PORT
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
-app.use('/api/', routes);
-app.use('/api/auth/', authRoutes);
+
 app.use(function(req, res, next) {
   res.header(
       "Access-Control-Allow-Headers",
@@ -34,6 +33,15 @@ app.use(function(req, res, next) {
   );
   next();
 })
+
+const api = express.Router();
+const auth = express.Router();
+apiRoutes.use("/api", require('./routes');
+authRoutes.use("auth", require('./auth/auth.routes');
+
+app.use(apiRoutes);
+app.use(authRoutes);
+
 app.use((error, req, res, next) => {
   console.log('ERROR STACK:');
   console.log(error.stack);
