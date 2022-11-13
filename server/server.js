@@ -3,6 +3,9 @@ const cors = require('cors')
 const path = require('path');
 const connection = require('../database/database');
 
+const apiRoutes = require('./routes.js');
+const authRoutes = require('./auth/auth.routes.js');
+
 //DATABASE
 connection
    .authenticate()
@@ -24,6 +27,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
+app.use('/api/auth/', authRoutes);
 app.use(function(req, res, next) {
   res.header(
       "Access-Control-Allow-Headers",
@@ -32,14 +36,7 @@ app.use(function(req, res, next) {
   next();
 })
 
-const apiRoutes = express.Router();
-const authRoutes = express.Router();
-apiRoutes.use("/api", require('./routes'));
-authRoutes.use("/api/auth", require('./auth/auth.routes'));
-
-app.use(apiRoutes);
-app.use(authRoutes);
-
+app.use('/api/', apiRoutes);
 app.use((error, req, res, next) => {
   console.log('ERROR STACK:');
   console.log(error.stack);
@@ -56,6 +53,7 @@ app.use((error, req, res, next) => {
 const { User, Product, StockHistory, Supplier } = require('../models/models');
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
+    console.log('to index.html');
     res.sendFile(path.join(__dirname + '/build/index.html'));
   });
 }
