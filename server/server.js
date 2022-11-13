@@ -32,10 +32,10 @@ app.use(function(req, res, next) {
   next();
 })
 
-const api = express.Router();
-const auth = express.Router();
-apiRoutes.use("/api", require('./routes');
-authRoutes.use("auth", require('./auth/auth.routes');
+const apiRoutes = express.Router();
+const authRoutes = express.Router();
+apiRoutes.use("/api", require('./routes'));
+authRoutes.use("/api/auth", require('./auth/auth.routes'));
 
 app.use(apiRoutes);
 app.use(authRoutes);
