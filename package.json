@@ -37,7 +37,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"react-scripts --openssl-legacy-provider start\" \"nodemon -L --trace-warnings server/server.js\"",
+    "start": "concurrently --kill-others \"react-scripts start\" \"nodemon -L --trace-warnings server/server.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
