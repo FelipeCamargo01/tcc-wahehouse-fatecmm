@@ -16,7 +16,7 @@ import Report from "./pages/report";
 
 function App() {
   return (
-    <Paper style={{ height: "100vh" }}>
+    // <Paper style={{ height: "100vh" }}>
       <Router>
         <Switch>
           <Route exact path="/signIn">
@@ -39,7 +39,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Paper>
+    // </Paper>
   );
 }
 

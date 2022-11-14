@@ -119,7 +119,7 @@ export default function Home() {
   const [gaugeChartSettings, setGaugeChartSettings] = useState({
     type: "gauge",
     title: {
-      text: "CAPACIDADE DE ESTOQUE",
+      text: "PERCENTUAL DO ESTOQUE OCUPADO",
     },
     plotarea: {
       marginTop: 80,
@@ -216,12 +216,10 @@ export default function Home() {
           <div
             style={{
               width: "100%",
-              height: "100%",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center",
-              marginTop: "2rem",
+              marginTop: '30px'
             }}>
             <ZingChart
               id="inputChart"
@@ -239,16 +237,16 @@ export default function Home() {
           <div
             style={{
               width: "100%",
-              height: "100%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
-              marginTop: "50px",
+              flexDirection: "row",
+              marginTop: "30px",
+              overflow: "hidden",
             }}>
             <ZingChart
               id="gaugeChart"
               data={gaugeChartSettings}
-              height={500}
+              height={450}
               width={900}
             />
           </div>
