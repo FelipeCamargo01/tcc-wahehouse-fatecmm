@@ -209,11 +209,22 @@ export default function Home() {
     });
   }, [inputStockMovimentation, outputStockMovimentation]);
 
+  const getWidthToBarGraph = () => {
+    let dashboardWidth = document.getElementById("dashboard")?.offsetWidth;
+    if(dashboardWidth) {
+      console.log(dashboardWidth*0.45);
+      return dashboardWidth*0.45;
+    }
+    
+    return 0;
+  }
+
   const renderContent = () => {
     if (isLogged) {
       return (
         <>
           <div
+            id="dashboard-container"
             style={{
               width: "100%",
               display: "flex",
@@ -225,13 +236,13 @@ export default function Home() {
               id="inputChart"
               data={inputChartSettings}
               height={400}
-              width={800}
+              width={getWidthToBarGraph()}
             />
             <ZingChart
               id="outputChart"
               data={outputChartSettings}
               height={400}
-              width={800}
+              width={getWidthToBarGraph()}
             />
           </div>
           <div
