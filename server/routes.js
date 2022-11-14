@@ -4,6 +4,7 @@ const router = express.Router();
 const SupplierController = require('./controllers/supplier-controller');
 const ProductController = require('./controllers/product-controller');
 const StockHistoryController = require('./controllers/stock-history-controller');
+const UserController = require('./controllers/user-controller');
 //POST
 
 //SUPPLIER
@@ -139,5 +140,16 @@ router.post('/get-stock-history', async function (req, res, next) {
         next(error);
     }
 })
-router.post('/');
+//USER CONTROLLER
+router.post('/verify-if-user-is-admin', async function (req, res, next) {
+    try {   
+        const response = await UserController.verifyIfUserIsAdmin(req.body);
+        res.status(200);
+        res.json(response);
+    }
+    catch (error) {
+        next(error);
+    }
+})
+
 module.exports = router;

@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import AuthService from "../services/auth.service";
 import { toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router";
+import userService from "../services/user.service";
 
 export default function SignUp(props) {
   const history = useHistory();
@@ -20,10 +21,20 @@ export default function SignUp(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  const [isAdminUser, setIsAdminUser] = useState(false);
+
   React.useEffect(() => {
+    if (localStorage.getItem("user") == null) {
+      history.push("/signIn");
+    }
     if (localStorage.getItem("user") != null) {
-      history.push({
-        pathname: "/",
+      let user = JSON.parse(localStorage.getItem("user"));
+      userService.verifyIfUserIsAdmin({ id: user.id }).then((response) => {
+        if (response) {
+          setIsAdminUser(true);
+        } else {
+          history.push("/");
+        }
       });
     }
   });
@@ -41,13 +52,20 @@ export default function SignUp(props) {
           if (response.data.message === "Error") {
             toast.error(response.data.data);
           } else {
-            console.log(response.data);
-            if (response.data.data?.accessToken) {
-              localStorage.setItem("user", JSON.stringify(response.data.data));
+            if (isAdminUser) {
+              toast.success("Usuário criado com sucesso!");
+              document.getElementById("signup-form").reset();
+            } else {
+              if (response.data.data?.accessToken) {
+                localStorage.setItem(
+                  "user",
+                  JSON.stringify(response.data.data)
+                );
+              }
+              history.push({
+                pathname: "/",
+              });
             }
-            history.push({
-              pathname: "/",
-            });
           }
         } else {
           toast.error(response.toString());

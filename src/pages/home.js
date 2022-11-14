@@ -190,7 +190,6 @@ export default function Home() {
         getStockMovimentationPerWeek();
       }, 10000);
     }
-    // });
   }, [isLogged]);
 
   useEffect(() => {
@@ -200,24 +199,11 @@ export default function Home() {
     zingchart.exec("outputChart", "setseriesvalues", {
       values: [outputStockMovimentation],
     });
-    console.log("capacity");
-    console.log(
-      inputStockMovimentation.reduce((a, b) => a + b, 0) -
-        outputStockMovimentation.reduce((a, b) => a + b, 0)
-    );
-    console.log(
-      ((inputStockMovimentation.reduce((a, b) => a + b, 0) -
-        outputStockMovimentation.reduce((a, b) => a + b, 0)) /
-        process.env.REACT_APP_WAREHOUSE_CAPACITY) *
-        100
-    );
-    console.log(process.env.REACT_APP_WAREHOUSE_CAPACITY);
     let percentualValue =
       ((inputStockMovimentation.reduce((a, b) => a + b, 0) -
         outputStockMovimentation.reduce((a, b) => a + b, 0)) /
         process.env.REACT_APP_WAREHOUSE_CAPACITY) *
       100;
-    console.log("percentualValue", Math.round(percentualValue));
     zingchart.exec("gaugeChart", "setseriesvalues", {
       values: [[percentualValue]],
     });
@@ -299,34 +285,5 @@ export default function Home() {
         {renderContent()}
       </Container>
     </Box>
-
-    // <div className={classes.root}>
-    //   <Navbar
-    //     isLogged={isLogged}
-    //     user={user}
-    //     onLogin={() => {
-    //       setIsLogged(true);
-    //       getUserFromStorage();
-    //     }}
-    //     onLogout={() => {
-    //       setIsLogged(false);
-    //     }}
-    //     onChangeScreen={(screen) => {
-    //       // setScreenLabel(screen);
-    //     }}
-    //   />
-    //   <ToastContainer
-    //     position="bottom-center"
-    //     autoClose={3000}
-    //     hideProgressBar={false}
-    //     newestOnTop={false}
-    //     closeOnClick
-    //     rtl={false}
-    //     pauseOnFocusLoss
-    //     draggable
-    //     pauseOnHover
-    //   />
-
-    // </div>
   );
 }

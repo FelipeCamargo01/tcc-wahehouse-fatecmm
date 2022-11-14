@@ -39,8 +39,10 @@ class UserService {
         return axios.post(API_URL + '/get-stock-history', { headers: authHeader() }).then(response => { return response.data })
     }
     getStockHistoryPerWeek() {
-        console.log(':::::::::::::GET HISTORY WEEK:::::::::::::');
         return axios.post(API_URL + '/get-stock-history-per-week', { headers: authHeader() }).then(response => { return response.data })
+    }
+    verifyIfUserIsAdmin(body) {
+        return axios.post(API_URL + '/verify-if-user-is-admin', body, { headers: authHeader() }).then(response => { return response.data })
     }
 }
 
