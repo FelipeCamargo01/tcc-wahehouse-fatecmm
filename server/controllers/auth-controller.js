@@ -13,7 +13,11 @@ class AuthController {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       password: bcrypt.hashSync(req.body.password, 8),
+<<<<<<< HEAD
       role: "user",
+=======
+      role: 'user'
+>>>>>>> d55acb444b5b2c8ed61738ffb30664b00e2f8f80
     })
       .then((user) => {
         var token = jwt.sign({ id: user.id }, config.secret, {
