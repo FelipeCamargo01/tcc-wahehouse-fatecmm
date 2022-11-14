@@ -3,9 +3,11 @@
     "use_env_variable": "DATABASE_URL",
     "dialect": "postgresql",
     "dialectOptions": {
-      "ssl": false
+      "ssl": {
+        "rejectUnauthorized": false
+     }
     },
-    "ssl":false
+    "ssl":true
   },
   "test": {
     "use_env_variable": "DATABASE_URL",

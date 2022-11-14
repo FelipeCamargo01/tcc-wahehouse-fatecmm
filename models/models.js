@@ -113,7 +113,7 @@ const Product = connection.define(
     },
     //Código
     SKU: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true
     },
@@ -138,11 +138,6 @@ const Product = connection.define(
     updatedAt: {
       allowNull: false,
       type: Sequelize.DATE
-    },
-    rfId: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
     },
     //lote
     batchNumber: {
@@ -173,7 +168,7 @@ const StockHistory = connection.define(
       allowNull: false,
     },
     productId: {
-      type: Sequelize.UUID,
+      type: Sequelize.STRING,
       references: { model: "products", key: "id" },
       allowNull: false,
       onDelete: 'cascade'

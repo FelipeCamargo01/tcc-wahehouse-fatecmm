@@ -119,7 +119,7 @@ export default function Home() {
   const [gaugeChartSettings, setGaugeChartSettings] = useState({
     type: "gauge",
     title: {
-      text: "CAPACIDADE DE ESTOQUE",
+      text: "PERCENTUAL DO ESTOQUE OCUPADO",
     },
     plotarea: {
       marginTop: 80,
@@ -209,46 +209,55 @@ export default function Home() {
     });
   }, [inputStockMovimentation, outputStockMovimentation]);
 
+  const getWidthToBarGraph = () => {
+    let dashboardWidth = document.getElementById("dashboard")?.offsetWidth;
+    if(dashboardWidth) {
+      console.log(dashboardWidth*0.45);
+      return dashboardWidth*0.45;
+    }
+    
+    return 0;
+  }
+
   const renderContent = () => {
     if (isLogged) {
       return (
         <>
           <div
+            id="dashboard-container"
             style={{
               width: "100%",
-              height: "100%",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center",
-              marginTop: "2rem",
+              marginTop: '30px'
             }}>
             <ZingChart
               id="inputChart"
               data={inputChartSettings}
               height={400}
-              width={800}
+              width={getWidthToBarGraph()}
             />
             <ZingChart
               id="outputChart"
               data={outputChartSettings}
               height={400}
-              width={800}
+              width={getWidthToBarGraph()}
             />
           </div>
           <div
             style={{
               width: "100%",
-              height: "100%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
-              marginTop: "50px",
+              flexDirection: "row",
+              marginTop: "30px",
+              overflow: "hidden",
             }}>
             <ZingChart
               id="gaugeChart"
               data={gaugeChartSettings}
-              height={500}
+              height={450}
               width={900}
             />
           </div>

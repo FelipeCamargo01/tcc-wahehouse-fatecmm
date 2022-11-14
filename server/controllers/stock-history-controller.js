@@ -6,7 +6,7 @@ const moment = require('moment');
 
 class ProductController {
     static async createStockHistory(body) {
-        const product = await Product.findOne({raw: true},{ where: { rfId: body.rfId } });
+        const product = await Product.findOne({raw: true},{ where: { SKU: body.SKU } });
         if(!product) throw new Error('Produto não encontrado');
 
         await StockHistory.create({

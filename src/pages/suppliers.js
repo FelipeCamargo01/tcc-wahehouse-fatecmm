@@ -115,7 +115,7 @@ export default function Suppliers() {
       addressNumber: supplierAddressNumber,
     }).then(
       (response) => {
-        toast.success("Supplier created successfully");
+        toast.success("Fornecedor criado com sucesso!");
         getSuppliers();
       },
       (error) => {
@@ -353,60 +353,87 @@ export default function Suppliers() {
   const renderSuppliersData = () => {
     if (isLogged) {
       return (
-        <Container maxWidth="md">
-          <Grid container>
-            <Grid item xs={12}>
-              <Box className={classes.formContainer}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
-                    <div
-                      style={{
-                        height: "100%",
-                      }}>
-                      <MaterialTable
-                        title="Fornecedores"
-                        columns={suppliersColumns}
-                        data={suppliersData}
-                        // actions={[
-                        //     {
-                        //       icon: 'save',
-                        //       tooltip: 'Save User',
-                        //       onClick: (event, rowData) => alert("You saved " + rowData.name)
-                        //     }
-                        //   ]}
-                        editable={{
-                          onRowDelete: (selectedRow) =>
-                            new Promise((resolve, reject) => {
-                              try {
-                                console.log(selectedRow);
-                                deleteSupplier(selectedRow.id);
-                                resolve();
-                              } catch (error) {
-                                console.log(error);
-                                reject();
-                              }
-                            }),
-                          onRowUpdate: (updatedRow, oldRow) =>
-                            new Promise((resolve, reject) => {
-                              updateSupplier(updatedRow);
-                              resolve();
-                            }),
-                        }}
-                        options={{
-                          actionsColumnIndex: -1,
-                          addRowPosition: "first",
-                          columnResizable: false,
-                          paging: true,
-                          tableLayout: "fixed",
-                        }}
-                      />
-                    </div>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+        <Grid style={{ paddingLeft: '60px', paddingRight: '60px' }} container>
+          <Grid item xs={12}>
+            <Box className={classes.formContainer}>
+              {/* <Grid container spacing={3}> */}
+              <Grid item xs={12} sm={12}>
+                <div
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                  }}>
+                  <MaterialTable
+                    title="Fornecedores"
+                    columns={suppliersColumns}
+                    data={suppliersData}
+                    localization={{
+                      pagination: {
+                        labelRowsSelect: "linhas",
+                        labelDisplayedRows: "{count} de {from}-{to}",
+                        firstTooltip: "Primeira página",
+                        previousTooltip: "Página anterior",
+                        nextTooltip: "Próxima página",
+                        lastTooltip: "Última página",
+                      },
+                      toolbar: {
+                        nRowsSelected: "{0} linhas(s) selecionadas",
+                        searchTooltip: "Pesquisar",
+                        searchPlaceholder: "Pesquisar",
+                      },
+                      header: {
+                        actions: "Ações",
+                      },
+                      body: {
+                        emptyDataSourceMessage:
+                          "Nenhum registro para exibir",
+                        filterRow: {
+                          filterTooltip: "Filtro",
+                        },
+                        editRow: {
+                          deleteText:
+                            "Tem certeza que deseja deletar este registro?",
+                          cancelTooltip: "Cancelar",
+                          saveTooltip: "Salvar",
+                        },
+                        addTooltip: "Adicionar",
+                        deleteTooltip: "Deletar",
+                        editTooltip: "Editar",
+                      },
+                    }}
+                    editable={{
+                      onRowDelete: (selectedRow) =>
+                        new Promise((resolve, reject) => {
+                          try {
+                            console.log(selectedRow);
+                            deleteSupplier(selectedRow.id);
+                            resolve();
+                          } catch (error) {
+                            console.log(error);
+                            reject();
+                          }
+                        }),
+                      onRowUpdate: (updatedRow, oldRow) =>
+                        new Promise((resolve, reject) => {
+                          updateSupplier(updatedRow);
+                          resolve();
+                        }),
+                    }}
+                    options={{
+                      actionsColumnIndex: -1,
+                      addRowPosition: "first",
+                      columnResizable: false,
+                      paging: true,
+                      pageSize:10,
+                      tableLayout: "fixed",
+                    }}
+                  />
+                </div>
+              </Grid>
+              {/* </Grid> */}
+            </Box>
           </Grid>
-        </Container>
+        </Grid>
       );
     }
   };
@@ -414,11 +441,7 @@ export default function Suppliers() {
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
-      <Container
-        display="flex"
-        flexDirection="column"
-        maxWidth="lg"
-        align="center">
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%', align: 'center' }}>
         {renderSuppliersForm()}
         <ToastContainer
           position="bottom-center"
@@ -432,7 +455,7 @@ export default function Suppliers() {
           pauseOnHover
         />
         {renderSuppliersData()}
-      </Container>
+      </div>
     </Box>
   );
 }

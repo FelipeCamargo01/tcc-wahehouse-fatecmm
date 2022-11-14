@@ -34,9 +34,14 @@ export default function SignIn() {
     AuthService.login(email, password)
       .then((data) => {
         console.log(data);
-        history.push({
-          pathname: "/",
-        });
+        if(data.message === 'Error') {
+          setErrorLogin(true);
+        }
+        else {
+          history.push({
+            pathname: "/",
+          });
+        } 
       })
       .catch((error) => {
         setErrorLogin(true);

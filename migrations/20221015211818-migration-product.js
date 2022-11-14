@@ -13,7 +13,7 @@ module.exports = {
           },
           //Código
           SKU: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             allowNull: false,
             primaryKey: true
           },
@@ -38,11 +38,6 @@ module.exports = {
           updatedAt: {
             allowNull: false,
             type: Sequelize.DATE
-          },
-          rfId: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true
           },
           //lote
           batchNumber: {
