@@ -1,13 +1,4 @@
-import {
-  Typography,
-  Container,
-  Box,
-  Grid,
-  Checkbox,
-  FormControlLabel,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+import { Typography, Container, Box, Grid } from "@material-ui/core";
 import MaterialTable from "@material-table/core";
 import Navbar from "./navbar";
 import { useState, useEffect } from "react";
@@ -50,9 +41,6 @@ export default function Report() {
     { title: "Quantidade", field: "quantity" },
     { title: "Preço Unitário", field: "price" },
   ]);
-  const [filter, setFilter] = useState("0");
-  const [filteredProductsData, setFilteredProductsData] =
-    useState(productsData);
 
   const classes = useStyles();
 
@@ -87,19 +75,6 @@ export default function Report() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(filter);
-    if (filter === "0") {
-      setFilteredProductsData(productsData);
-    }
-    if (filter === "1") {
-      setFilteredProductsData(productsData.filter((e) => e.quantity > 0));
-    }
-    if (filter === "2") {
-      setFilteredProductsData(productsData.filter((e) => e.quantity == 0));
-    }
-  }, [filter]);
-
   const renderReportData = () => {
     if (isLogged) {
       return (
@@ -113,7 +88,7 @@ export default function Report() {
                       <MaterialTable
                         title="Produtos"
                         columns={productsColumns}
-                        data={filteredProductsData}
+                        data={productsData}
                         localization={{
                           pagination: {
                             labelRowsSelect: "linhas",
@@ -156,20 +131,6 @@ export default function Report() {
                           paging: true,
                           tableLayout: "auto",
                         }}
-                        actions={[
-                          {
-                            icon: () => (
-                              <Select
-                                value={filter}
-                                onChange={(e) => setFilter(e.target.value)}>
-                                <MenuItem value={"0"}>Todos</MenuItem>
-                                <MenuItem value={"1"}>Em Estoque</MenuItem>
-                                <MenuItem value={"2"}>Sem Estoque</MenuItem>
-                              </Select>
-                            ),
-                            isFreeAction: true,
-                          },
-                        ]}
                       />
                     </div>
                   </Grid>

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+
 import { useHistory } from "react-router";
 import Box from "@material-ui/core/Box";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
+
 import {
   Drawer,
   List,
@@ -24,6 +22,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import ListAlt from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 
 require("./css/navbar.css");
@@ -83,7 +83,7 @@ export default function Navbar(props) {
 
   const logout = () => {
     localStorage.removeItem("user");
-    window.location.reload(true)
+    window.location.reload(true);
   };
 
   const renderLogin = () => {
@@ -92,6 +92,7 @@ export default function Navbar(props) {
         <Box>
           <Box>
             <Typography
+              align="center"
               variant="h6"
               className={classes.profileName}
               component="h6"
@@ -110,8 +111,6 @@ export default function Navbar(props) {
             PaperProps={{
               style: {
                 width: "20ch",
-                backgroundColor: "orange",
-                color: "#E9E9EB",
               },
             }}>
             <MenuItem onClick={logout}>Logout</MenuItem>
@@ -123,6 +122,8 @@ export default function Navbar(props) {
         <Button
           color="primary"
           variant="contained"
+          startIcon={<LockOpenIcon />}
+          fullWidth
           disableElevation
           onClick={onClickSignIn}>
           <a className={classes.linkStyle} href="/signIn">

@@ -12,13 +12,12 @@ import {
   Box,
   Button,
   Grid,
-  Paper,
 } from "@material-ui/core";
 
 import UserService from "../services/user.service";
 
 import MaterialTable, { Column } from "@material-table/core";
-import InputMask, { ReactInputMask } from "react-input-mask";
+import InputMask from "react-input-mask";
 
 //css imports
 require("./css/forms.css");
@@ -299,7 +298,7 @@ export default function Suppliers() {
               </Grid>
               <Grid item xs={6}>
                 <InputMask
-                  mask={"9999-9999"}
+                  mask={"(99)9999-9999"}
                   value={supplierPhone}
                   onChange={(e) => setSupplierPhone(e.target.value)}>
                   {() => (
@@ -353,7 +352,7 @@ export default function Suppliers() {
   const renderSuppliersData = () => {
     if (isLogged) {
       return (
-        <Grid style={{ paddingLeft: '60px', paddingRight: '60px' }} container>
+        <Grid style={{ paddingLeft: "60px", paddingRight: "60px" }} container>
           <Grid item xs={12}>
             <Box className={classes.formContainer}>
               {/* <Grid container spacing={3}> */}
@@ -385,8 +384,7 @@ export default function Suppliers() {
                         actions: "Ações",
                       },
                       body: {
-                        emptyDataSourceMessage:
-                          "Nenhum registro para exibir",
+                        emptyDataSourceMessage: "Nenhum registro para exibir",
                         filterRow: {
                           filterTooltip: "Filtro",
                         },
@@ -424,7 +422,7 @@ export default function Suppliers() {
                       addRowPosition: "first",
                       columnResizable: false,
                       paging: true,
-                      pageSize:10,
+                      pageSize: 10,
                       tableLayout: "fixed",
                     }}
                   />
@@ -441,7 +439,13 @@ export default function Suppliers() {
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
-      <div style={{ display: 'flex', flexDirection: 'column', width: '100%', align: 'center' }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          align: "center",
+        }}>
         {renderSuppliersForm()}
         <ToastContainer
           position="bottom-center"
