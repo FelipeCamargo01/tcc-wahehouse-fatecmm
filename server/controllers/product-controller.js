@@ -12,7 +12,6 @@ class ProductController {
       price: body.price,
       supplierId: body.supplierId,
       description: body.description,
-      rfId: body.rfId,
       batchNumber: body.batchNumber,
     });
 
@@ -43,7 +42,6 @@ class ProductController {
         price: body.price,
         supplierId: body.supplierId,
         description: body.description,
-        rfId: body.rfId,
         batchNumber: body.batchNumber,
       },
       {

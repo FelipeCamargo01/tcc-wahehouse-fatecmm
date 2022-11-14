@@ -3,9 +3,6 @@ import Navbar from "./navbar";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import CurrencyInput from "react-currency-input-field";
-
-import SelectSearch, { useSelect } from "react-select-search";
 import "react-select-search/style.css";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -27,8 +24,6 @@ import {
   Paper,
 } from "@material-ui/core";
 
-import InputMask, { ReactInputMask } from "react-input-mask";
-import e from "cors";
 
 //css imports
 require("./css/forms.css");
@@ -52,7 +47,6 @@ export default function Product(props) {
   const [productPrice, setProductPrice] = useState(null);
   const [productSupplierId, setProductSupplierId] = useState(null);
   const [productImage, setProductImage] = useState(null);
-  const [productRfId, setProductRfId] = useState(null);
   const [productBatchNumber, setProductBatchNumber] = useState(null);
   const [productDescription, setProductDescription] = useState(null);
   const [selectedProductSupplier, setSelectedProductSupplier] = useState(null);
@@ -65,8 +59,7 @@ export default function Product(props) {
     { title: "SKU", field: "sku", editable: false },
     { title: "Nome", field: "name" },
     { title: "Fornecedor", field: "supplier", productSuppliers },
-    { title: "Preço Unitário", field: "price" },
-    { title: "RFID", field: "rfId" },
+    { title: "Preço Unitário (R$)", field: "price" },
     { title: "Lote", field: "batchNumber" },
     { title: "Descrição", field: "description" },
   ]);
@@ -110,7 +103,6 @@ export default function Product(props) {
       price: productPrice,
       supplierId: selectedProductSupplier,
       description: productDescription,
-      rfId: productRfId,
       batchNumber: productBatchNumber,
     })
       .then((response) => {
@@ -140,7 +132,6 @@ export default function Product(props) {
           sku: response.data[i].SKU,
           price: response.data[i].price,
           supplier: response.data[i]["supplier.name"],
-          rfId: response.data[i].rfId,
           batchNumber: response.data[i].batchNumber,
           description: response.data[i].description,
         });
@@ -201,15 +192,13 @@ export default function Product(props) {
               <Grid item xs={3}>
                 <TextField
                   variant="outlined"
-                  label="RFID"
-                  value={productRfId}
+                  label="SKU"
+                  value={productSKU}
                   type="text"
                   fullWidth
                   size="small"
                   required
-                  onChange={(e) => {
-                    setProductRfId(e.target.value);
-                  }}></TextField>
+                  onChange={(e) => setProductSKU(e.target.value)}></TextField>
               </Grid>
               <Grid item xs={3}>
                 <TextField
@@ -253,17 +242,6 @@ export default function Product(props) {
                   }
                   getOptionLabel={(option) => option.name}
                 />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  variant="outlined"
-                  label="SKU"
-                  value={productSKU}
-                  type="number"
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) => setProductSKU(e.target.value)}></TextField>
               </Grid>
               <Grid item xs={3}>
                 <TextField
@@ -333,7 +311,7 @@ export default function Product(props) {
   const renderProductData = () => {
     if (isLogged) {
       return (
-        <Container maxWidth="lg">
+        <Grid style={{ paddingLeft: '60px', paddingRight: '60px' }} container>
           <Grid container>
             <Grid item xs={12}>
               <Box className={classes.formContainer}>
@@ -402,6 +380,7 @@ export default function Product(props) {
                           columnResizable: true,
                           paging: true,
                           tableLayout: "auto",
+                          pageSize: 10
                         }}
                       />
                     </div>
@@ -410,7 +389,7 @@ export default function Product(props) {
               </Box>
             </Grid>
           </Grid>
-        </Container>
+        </Grid>
       );
     }
   };
@@ -418,11 +397,8 @@ export default function Product(props) {
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
-      <Container
-        maxWidth="lg"
-        display="flex"
-        flexDirection="column"
-        align="center">
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%', align: 'center' }}>
+
         {renderProductForm()}
         <ToastContainer
           position="bottom-center"
@@ -436,7 +412,8 @@ export default function Product(props) {
           pauseOnHover
         />
         {renderProductData()}
-      </Container>
+      </div>
+
     </Box>
   );
 }
