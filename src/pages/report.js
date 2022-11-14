@@ -5,6 +5,8 @@ import {
   Grid,
   Checkbox,
   FormControlLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import MaterialTable from "@material-table/core";
 import Navbar from "./navbar";
@@ -46,9 +48,11 @@ export default function Report() {
     { title: "Nome", field: "name" },
     { title: "Fornecedor", field: "supplier", productSuppliers },
     { title: "Quantidade", field: "quantity" },
-    { title: "Preço", field: "price" },
+    { title: "Preço Unitário", field: "price" },
   ]);
-  const [filter, setFilter] = useState(true);
+  const [filter, setFilter] = useState("0");
+  const [filteredProductsData, setFilteredProductsData] =
+    useState(productsData);
 
   const classes = useStyles();
 
@@ -75,10 +79,6 @@ export default function Report() {
     });
   };
 
-  const handleChange = () => {
-    setFilter(!filter);
-  };
-
   useEffect(() => {
     async function fetchData() {
       await getProductSuppliers();
@@ -86,6 +86,19 @@ export default function Report() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(filter);
+    if (filter === "0") {
+      setFilteredProductsData(productsData);
+    }
+    if (filter === "1") {
+      setFilteredProductsData(productsData.filter((e) => e.quantity > 0));
+    }
+    if (filter === "2") {
+      setFilteredProductsData(productsData.filter((e) => e.quantity == 0));
+    }
+  }, [filter]);
 
   const renderReportData = () => {
     if (isLogged) {
@@ -100,7 +113,7 @@ export default function Report() {
                       <MaterialTable
                         title="Produtos"
                         columns={productsColumns}
-                        data={productsData}
+                        data={filteredProductsData}
                         localization={{
                           pagination: {
                             labelRowsSelect: "linhas",
@@ -136,7 +149,7 @@ export default function Report() {
                           },
                         }}
                         options={{
-                          filtering: filter,
+                          filtering: true,
                           actionsColumnIndex: -1,
                           addRowPosition: "first",
                           columnResizable: true,
@@ -146,18 +159,14 @@ export default function Report() {
                         actions={[
                           {
                             icon: () => (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    color="primary"
-                                    checked={filter}
-                                    onChange={handleChange}
-                                  />
-                                }
-                                label="Filtrar"
-                              />
+                              <Select
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}>
+                                <MenuItem value={"0"}>Todos</MenuItem>
+                                <MenuItem value={"1"}>Em Estoque</MenuItem>
+                                <MenuItem value={"2"}>Sem Estoque</MenuItem>
+                              </Select>
                             ),
-                            tooltip: "Filtrar",
                             isFreeAction: true,
                           },
                         ]}

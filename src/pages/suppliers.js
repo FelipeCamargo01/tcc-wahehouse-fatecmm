@@ -58,15 +58,34 @@ export default function Suppliers() {
 
   const [suppliersData, setSuppliersData] = useState([]);
   const [suppliersColumns, setSuppliersColumns] = useState([
-    { field: "name", title: "Nome" },
-    { field: "email", title: "Email" },
-    { field: "phone", title: "Telefone" },
-    { field: "address", title: "Endereço" },
-    { field: "cnpj", title: "CNPJ" },
-    { field: "corporateName", title: "Razão Social" },
-    { field: "fantasyName", title: "Nome Fantasia" },
-    { field: "cep", title: "CEP" },
-    { field: "addressNumber", title: "Número" },
+    {
+      field: "cnpj",
+      title: "CNPJ",
+      cellStyle: { maxWidth: "5px", overflowWrap: "break-word" },
+      align: "center",
+    },
+    {
+      field: "fantasyName",
+      title: "Nome Fantasia",
+      cellStyle: { maxWidth: "1px", overflowWrap: "break-word" },
+      align: "center",
+    },
+    { field: "corporateName", title: "Razão Social", align: "center" },
+    {
+      field: "email",
+      title: "Email",
+      cellStyle: { maxWidth: "10px", overflowWrap: "break-word" },
+      align: "center",
+    },
+    {
+      field: "phone",
+      title: "Telefone",
+      cellStyle: { maxWidth: "2px" },
+      align: "center",
+    },
+    { field: "address", title: "Endereço", align: "center" },
+    { field: "cep", title: "CEP", align: "center" },
+    { field: "addressNumber", title: "Número", align: "center" },
   ]);
 
   const classes = useStyles();
@@ -376,9 +395,9 @@ export default function Suppliers() {
                         options={{
                           actionsColumnIndex: -1,
                           addRowPosition: "first",
-                          columnResizable: true,
+                          columnResizable: false,
                           paging: true,
-                          tableLayout: "auto",
+                          tableLayout: "fixed",
                         }}
                       />
                     </div>
@@ -401,6 +420,17 @@ export default function Suppliers() {
         maxWidth="lg"
         align="center">
         {renderSuppliersForm()}
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         {renderSuppliersData()}
       </Container>
     </Box>

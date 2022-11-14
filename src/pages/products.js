@@ -62,10 +62,10 @@ export default function Product(props) {
 
   const [productsData, setProductsData] = useState([]);
   const [productsColumns, setSuppliersColumns] = useState([
-    { title: "Nome", field: "name" },
     { title: "SKU", field: "sku", editable: false },
-    { title: "Preço", field: "price" },
+    { title: "Nome", field: "name" },
     { title: "Fornecedor", field: "supplier", productSuppliers },
+    { title: "Preço Unitário", field: "price" },
     { title: "RFID", field: "rfId" },
     { title: "Lote", field: "batchNumber" },
     { title: "Descrição", field: "description" },
@@ -424,6 +424,17 @@ export default function Product(props) {
         flexDirection="column"
         align="center">
         {renderProductForm()}
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         {renderProductData()}
       </Container>
     </Box>

@@ -116,6 +116,7 @@ export default function SignUp(props) {
               variant="outlined"
               label="E-mail"
               fullWidth
+              type="email"
               size="small"
               autoComplete="email"
               required
@@ -126,6 +127,7 @@ export default function SignUp(props) {
               variant="outlined"
               label="Senha"
               fullWidth
+              type="password"
               size="small"
               autoComplete="current-password"
               required
