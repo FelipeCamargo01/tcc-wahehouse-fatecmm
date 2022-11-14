@@ -367,6 +367,40 @@ export default function Suppliers() {
                     title="Fornecedores"
                     columns={suppliersColumns}
                     data={suppliersData}
+                    localization={{
+                      pagination: {
+                        labelRowsSelect: "linhas",
+                        labelDisplayedRows: "{count} de {from}-{to}",
+                        firstTooltip: "Primeira página",
+                        previousTooltip: "Página anterior",
+                        nextTooltip: "Próxima página",
+                        lastTooltip: "Última página",
+                      },
+                      toolbar: {
+                        nRowsSelected: "{0} linhas(s) selecionadas",
+                        searchTooltip: "Pesquisar",
+                        searchPlaceholder: "Pesquisar",
+                      },
+                      header: {
+                        actions: "Ações",
+                      },
+                      body: {
+                        emptyDataSourceMessage:
+                          "Nenhum registro para exibir",
+                        filterRow: {
+                          filterTooltip: "Filtro",
+                        },
+                        editRow: {
+                          deleteText:
+                            "Tem certeza que deseja deletar este registro?",
+                          cancelTooltip: "Cancelar",
+                          saveTooltip: "Salvar",
+                        },
+                        addTooltip: "Adicionar",
+                        deleteTooltip: "Deletar",
+                        editTooltip: "Editar",
+                      },
+                    }}
                     editable={{
                       onRowDelete: (selectedRow) =>
                         new Promise((resolve, reject) => {
