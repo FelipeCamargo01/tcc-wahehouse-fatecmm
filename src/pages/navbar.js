@@ -23,6 +23,7 @@ import {
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import ListAlt from "@material-ui/icons/ListAlt";
+import DescriptionIcon from "@material-ui/icons/Description";
 import { Link } from "react-router-dom";
 
 require("./css/navbar.css");
@@ -141,7 +142,7 @@ export default function Navbar(props) {
           anchor="left"
           classes={{ paper: classes.drawerPaper }}>
           <List>
-            <ListItem>
+            <ListItem style={{ maxWidth: "100%" }}>
               <ListItemText primary={renderLogin()} />
             </ListItem>
             <Divider />
@@ -162,6 +163,12 @@ export default function Navbar(props) {
                 <PeopleAlt color="primary" />
               </ListItemIcon>
               <ListItemText primary="Fornecedores" />
+            </ListItem>
+            <ListItem button component={Link} to={"/report"}>
+              <ListItemIcon>
+                <DescriptionIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="Relatório" />
             </ListItem>
           </List>
         </Drawer>

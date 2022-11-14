@@ -25,8 +25,6 @@ require("./css/forms.css");
 
 const useStyles = makeStyles({
   formContainer: {
-    paddingLeft: "7vw",
-    paddingRight: "7vw",
     paddingTop: "2vh",
   },
 });
@@ -344,9 +342,7 @@ export default function Suppliers() {
                   <Grid item xs={12} sm={12}>
                     <div
                       style={{
-                        height: 700,
-                        width: "100%",
-                        marginBottom: "5rem",
+                        height: "100%",
                       }}>
                       <MaterialTable
                         title="Fornecedores"
@@ -380,6 +376,9 @@ export default function Suppliers() {
                         options={{
                           actionsColumnIndex: -1,
                           addRowPosition: "first",
+                          columnResizable: true,
+                          paging: true,
+                          tableLayout: "auto",
                         }}
                       />
                     </div>
@@ -399,7 +398,7 @@ export default function Suppliers() {
       <Container
         display="flex"
         flexDirection="column"
-        maxWidth="xl"
+        maxWidth="lg"
         align="center">
         {renderSuppliersForm()}
         {renderSuppliersData()}
@@ -407,110 +406,3 @@ export default function Suppliers() {
     </Box>
   );
 }
-
-//   {/* <Grid id="item-form" className={classes.formContainer} container>
-//       <Grid item xs={12}>
-//         <Box className={classes.formContainer}>
-//           <h2>Criar fornecedor</h2>
-//           <form onSubmit={createSupplier}>
-//             <Grid container spacing={3}>
-//               <Grid item xs={6}>
-//                 <input
-//                   type="text"
-//                   placeholder="NOME"
-//                   onChange={(e) => setSupplierName(e.target.value)}
-//                   required
-//                 />
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <input
-//                   type="email"
-//                   placeholder="E-MAIL"
-//                   onChange={(e) => setSupplierEmail(e.target.value)}
-//                   required
-//                 />
-//               </Grid>
-//             </Grid>
-//             <Grid container spacing={3}>
-//               <Grid item xs={5}>
-//                 <input
-//                   type="text"
-//                   placeholder="TELEFONE"
-//                   onChange={(e) => setSupplierPhone(e.target.value)}
-//                   required
-//                 />
-//               </Grid>
-//               <Grid item xs={7}>
-//                 <input
-//                   type="text"
-//                   placeholder="ENDEREÇO"
-//                   onChange={(e) => setSupplierAddress(e.target.value)}
-//                   required
-//                 />
-//               </Grid>
-//             </Grid>
-//             <Grid container spacing={3}>
-//               <Grid item xs={6}>
-//                 <input
-//                   type="text"
-//                   placeholder="CNPJ"
-//                   onChange={(e) => setSupplierCNPJ(e.target.value)}
-//                 />
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <input
-//                   type="text"
-//                   placeholder="NOME FANTASIA"
-//                   onChange={(e) => setSupplierFantasyName(e.target.value)}
-//                 />
-//               </Grid>
-//             </Grid>
-//             <Grid container spacing={3}>
-//               <Grid item xs={6}>
-//                 <input
-//                   type="text"
-//                   placeholder="RAZÃO SOCIAL"
-//                   onChange={(e) => setSupplierCorporateName(e.target.value)}
-//                 />
-//               </Grid>
-//               <Grid item xs={3}>
-//                 <input
-//                   type="text"
-//                   placeholder="CEP"
-//                   onChange={(e) => setSupplierCEP(e.target.value)}
-//                 />
-//               </Grid>
-//               <Grid item xs={3}>
-//                 <input
-//                   type="number"
-//                   placeholder="NÚMERO"
-//                   onChange={(e) => setSupplierAddressNumber(e.target.value)}
-//                 />
-//               </Grid>
-//             </Grid>
-//             <Grid container spacing={3}>
-//               <Grid item xs={12}>
-//                 <Box mt={3} style={{ float: "right" }}>
-//                   <Button
-//                     onClick={() => {
-//                       // setIsModalFormOpen(false);
-//                     }}
-//                     variant="outlined"
-//                     color="primary"
-//                     type="reset">
-//                     Limpar
-//                   </Button>
-//                   <Button
-//                     style={{ marginLeft: "15px" }}
-//                     color="secondary"
-//                     variant="contained"
-//                     type="submit">
-//                     Salvar
-//                   </Button>
-//                 </Box>
-//               </Grid>
-//             </Grid>
-//           </form>
-//         </Box>
-//       </Grid>
-//     </Grid> */}

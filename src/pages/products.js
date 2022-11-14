@@ -24,9 +24,11 @@ import {
   Grid,
   Typography,
   InputAdornment,
+  Paper,
 } from "@material-ui/core";
 
 import InputMask, { ReactInputMask } from "react-input-mask";
+import e from "cors";
 
 //css imports
 require("./css/forms.css");
@@ -39,8 +41,6 @@ const useStyles = makeStyles({
     backgroundColor: "white",
   },
   formContainer: {
-    paddingLeft: "10vw",
-    paddingRight: "10vw",
     paddingTop: "2vh",
   },
 });
@@ -108,9 +108,7 @@ export default function Product(props) {
       name: productName,
       SKU: productSKU,
       price: productPrice,
-
       supplierId: selectedProductSupplier,
-
       description: productDescription,
       rfId: productRfId,
       batchNumber: productBatchNumber,
@@ -209,7 +207,9 @@ export default function Product(props) {
                   fullWidth
                   size="small"
                   required
-                  onChange={(e) => setProductRfId(e.target.value)}></TextField>
+                  onChange={(e) => {
+                    setProductRfId(e.target.value);
+                  }}></TextField>
               </Grid>
               <Grid item xs={3}>
                 <TextField
@@ -249,7 +249,7 @@ export default function Product(props) {
                     />
                   )}
                   onChange={(event, option) =>
-                    setProductSupplierId(option.value)
+                    setSelectedProductSupplier(option.value)
                   }
                   getOptionLabel={(option) => option.name}
                 />
@@ -320,126 +320,6 @@ export default function Product(props) {
             </Grid>
           </form>
         </Container>
-
-        // <Grid container id="item-form" className={classes.formContainer}>
-        //   <Grid item xs={12}>
-        //     <Box className={classes.formContainer}>
-        //       <h2>Criar produto</h2>
-        //       <form onSubmit={createProduct}>
-        //         <Grid container xs={12} spacing={3}>
-        //           <Grid item xs={6}>
-        //             <input
-        //               name="supplierName"
-        //               required
-        //               id="productName"
-        //               onChange={(e) => setProductName(e.target.value)}
-        //               autoFocus
-        //               placeholder="NOME"
-        //               type="text"></input>
-        //           </Grid>
-        //           <Grid item xs={3}>
-        //             <input
-        //               name="productSKU"
-        //               required
-        //               id="productSKU"
-        //               onChange={(e) => setProductSKU(e.target.value)}
-        //               autoFocus
-        //               placeholder="SKU"
-        //               type="number"></input>
-        //           </Grid>
-        //         </Grid>
-        //         <Grid container xs={12} spacing={3}>
-        //           <Grid item xs={3}>
-        //             <CurrencyInput
-        //               prefix="R$"
-        //               name="productPrice"
-        //               id="productPrice"
-        //               onChange={(e) => setProductName(e.target.value)}
-        //               placeholder="PREÇO"
-        //             />
-        //           </Grid>
-        //           <Grid item xs={6}>
-        //             <SelectSearch
-        //               search={true}
-        //               value={selectedProductSupplier}
-        //               getOptions={(query) => {
-        //                 return new Promise((resolve, reject) => {
-        //                   UserService.getSuppliers().then((response) => {
-        //                     console.log("resp get suppl");
-        //                     console.log(response.data);
-        //                     resolve(
-        //                       response.data.map(({ id, name }) => ({
-        //                         value: id,
-        //                         name: name,
-        //                       }))
-        //                     );
-        //                   });
-        //                 });
-        //               }}
-        //               options={[]}
-        //               id="productSupplierId"
-        //               name="search"
-        //               onChange={(value) => {
-        //                 console.log(value);
-        //                 setSelectedProductSupplier(value);
-        //               }}
-        //               placeholder="FORNECEDOR"
-        //             />
-        //           </Grid>
-        //         </Grid>
-        //         <Grid container xs={12} spacing={3}>
-        //           <Grid item xs={6}>
-        //             <input
-        //               name="productRfId"
-        //               id="productRfId"
-        //               onChange={(e) => setProductRfId(e.target.value)}
-        //               autoFocus
-        //               placeholder="RFID"
-        //               type="text"></input>
-        //           </Grid>
-        //           <Grid item xs={6}>
-        //             <input
-        //               name="productBatchNumber"
-        //               id="productBatchNumber"
-        //               onChange={(e) => setProductBatchNumber(e.target.value)}
-        //               autoFocus
-        //               placeholder="LOTE"
-        //               type="text"></input>
-        //           </Grid>
-        //         </Grid>
-        //         <Grid container xs={12} spacing={3}>
-        //           <Grid item xs={12}>
-        //             <textarea
-        //               name="productDescription"
-        //               id="productDescription"
-        //               onChange={(e) => setProductDescription(e.target.value)}
-        //               autoFocus
-        //               placeholder="DESCRIÇÃO"
-        //               type="text"></textarea>
-        //           </Grid>
-        //         </Grid>
-        //         <Box mt={3} style={{ float: "right" }}>
-        //           <Button
-        //             onClick={() => {
-        //               // setIsModalFormOpen(false);
-        //             }}
-        //             variant="outlined"
-        //             color="primary"
-        //             type="reset">
-        //             Limpar
-        //           </Button>
-        //           <Button
-        //             style={{ marginLeft: "15px" }}
-        //             color="secondary"
-        //             variant="contained"
-        //             type="submit">
-        //             Salvar
-        //           </Button>
-        //         </Box>
-        //       </form>
-        //     </Box>
-        //   </Grid>
-        // </Grid>
       );
     } else {
       return (
@@ -451,90 +331,97 @@ export default function Product(props) {
   };
 
   const renderProductData = () => {
-    return (
-      <>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box className={classes.formContainer}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12}>
-                  <div style={{ height: 700, width: "100%" }}>
-                    <MaterialTable
-                      title="Produtos"
-                      columns={productsColumns}
-                      data={productsData}
-                      localization={{
-                        pagination: {
-                          labelRowsSelect: "linhas",
-                          labelDisplayedRows: "{count} de {from}-{to}",
-                          firstTooltip: "Primeira página",
-                          previousTooltip: "Página anterior",
-                          nextTooltip: "Próxima página",
-                          lastTooltip: "Última página",
-                        },
-                        toolbar: {
-                          nRowsSelected: "{0} linhas(s) selecionadas",
-                          searchTooltip: "Pesquisar",
-                          searchPlaceholder: "Pesquisar",
-                        },
-                        header: {
-                          actions: "Ações",
-                        },
-                        body: {
-                          emptyDataSourceMessage: "Nenhum registro para exibir",
-                          filterRow: {
-                            filterTooltip: "Filtro",
+    if (isLogged) {
+      return (
+        <Container maxWidth="lg">
+          <Grid container>
+            <Grid item xs={12}>
+              <Box className={classes.formContainer}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={12}>
+                    <div style={{ height: "700", width: "100%" }}>
+                      <MaterialTable
+                        height="700"
+                        title="Produtos"
+                        columns={productsColumns}
+                        data={productsData}
+                        localization={{
+                          pagination: {
+                            labelRowsSelect: "linhas",
+                            labelDisplayedRows: "{count} de {from}-{to}",
+                            firstTooltip: "Primeira página",
+                            previousTooltip: "Página anterior",
+                            nextTooltip: "Próxima página",
+                            lastTooltip: "Última página",
                           },
-                          editRow: {
-                            deleteText:
-                              "Tem certeza que deseja deletar este registro?",
-                            cancelTooltip: "Cancelar",
-                            saveTooltip: "Salvar",
+                          toolbar: {
+                            nRowsSelected: "{0} linhas(s) selecionadas",
+                            searchTooltip: "Pesquisar",
+                            searchPlaceholder: "Pesquisar",
                           },
-                          addTooltip: "Adicionar",
-                          deleteTooltip: "Deletar",
-                          editTooltip: "Editar",
-                        },
-                      }}
-                      editable={{
-                        onRowDelete: (selectedRow) =>
-                          new Promise((resolve, reject) => {
-                            try {
-                              console.log(selectedRow);
-                              deleteProduct(selectedRow.sku);
+                          header: {
+                            actions: "Ações",
+                          },
+                          body: {
+                            emptyDataSourceMessage:
+                              "Nenhum registro para exibir",
+                            filterRow: {
+                              filterTooltip: "Filtro",
+                            },
+                            editRow: {
+                              deleteText:
+                                "Tem certeza que deseja deletar este registro?",
+                              cancelTooltip: "Cancelar",
+                              saveTooltip: "Salvar",
+                            },
+                            addTooltip: "Adicionar",
+                            deleteTooltip: "Deletar",
+                            editTooltip: "Editar",
+                          },
+                        }}
+                        editable={{
+                          onRowDelete: (selectedRow) =>
+                            new Promise((resolve, reject) => {
+                              try {
+                                console.log(selectedRow);
+                                deleteProduct(selectedRow.sku);
+                                resolve();
+                              } catch (error) {
+                                reject();
+                              }
+                            }),
+                          onRowUpdate: (updatedRow, oldRow) =>
+                            new Promise((resolve, reject) => {
+                              updateProduct(updatedRow);
                               resolve();
-                            } catch (error) {
-                              reject();
-                            }
-                          }),
-                        onRowUpdate: (updatedRow, oldRow) =>
-                          new Promise((resolve, reject) => {
-                            updateProduct(updatedRow);
-                            resolve();
-                          }),
-                      }}
-                      options={{
-                        actionsColumnIndex: -1,
-                        addRowPosition: "first",
-                      }}
-                    />
-                  </div>
+                            }),
+                        }}
+                        options={{
+                          actionsColumnIndex: -1,
+                          addRowPosition: "first",
+                          columnResizable: true,
+                          paging: true,
+                          tableLayout: "auto",
+                        }}
+                      />
+                    </div>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </>
-    );
+        </Container>
+      );
+    }
   };
 
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
       <Container
+        maxWidth="lg"
         display="flex"
         flexDirection="column"
-        maxWidth="xl"
         align="center">
         {renderProductForm()}
         {renderProductData()}

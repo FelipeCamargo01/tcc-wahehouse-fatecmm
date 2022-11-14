@@ -58,60 +58,6 @@ export default function SignIn() {
   };
 
   return (
-    // <Container component="main" maxWidth="xs">
-    //   <CssBaseline />
-    //   <div className={classes.paper}>
-    //     <Avatar className={classes.avatar}>
-    //       <LockOutlinedIcon />
-    //     </Avatar>
-    //     <Typography component="h1" variant="h5">
-    //       Faça seu Login
-    //     </Typography>
-    //     <form className={classes.form} onSubmit={onSubmit}>
-    //       <TextField
-    //         variant="outlined"
-    //         margin="normal"
-    //         required
-    //         fullWidth
-    //         id="email"
-    //         label="Email"
-    //         name="email"
-    //         autoComplete="email"
-    //         autoFocus
-    //         onChange={(e) => setEmail(e.target.value)}
-    //       />
-    //       <TextField
-    //         variant="outlined"
-    //         margin="normal"
-    //         required
-    //         fullWidth
-    //         name="password"
-    //         label="Senha"
-    //         type="password"
-    //         id="password"
-    //         autoComplete="current-password"
-    //         onChange={(e) => setPassword(e.target.value)}
-    //       />
-    //       <Button
-    //         type="submit"
-    //         fullWidth
-    //         variant="contained"
-    //         color="primary"
-    //         className={classes.submit}
-    //       >
-    //         Login
-    //       </Button>
-    //       <Grid justifyContent="center" container>
-    //         <Grid item>
-    //           <Link href="/signup" variant="body2">
-    //             {"Não tem uma conta? Cadastre-se"}
-    //           </Link>
-    //         </Grid>
-    //       </Grid>
-    //     </form>
-    //     <Box mt={4}>{renderErrorLogin()}</Box>
-    //   </div>
-    // </Container>
     <Container maxWidth="sm" align="center" style={{ paddingTop: "5rem" }}>
       <Typography
         marginBottom={"3rem"}

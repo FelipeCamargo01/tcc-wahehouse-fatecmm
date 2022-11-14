@@ -3,19 +3,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Navbar from "./navbar";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 
-import zingchart from 'zingchart/es6';
-import ZingChart from 'zingchart-react';
+import { Container, Box, Typography } from "@material-ui/core";
+
+import zingchart from "zingchart/es6";
+import ZingChart from "zingchart-react";
 
 import UserService from "../services/user.service";
 import { toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.min.css";
 
-require('./css/home.css');
-require('dotenv');
+require("./css/home.css");
+require("dotenv");
 
 const useStyles = makeStyles({
   root: {
@@ -24,8 +24,8 @@ const useStyles = makeStyles({
     backgroundColor: "white",
   },
   textField: {
-    border: '2px solid #0084A8 !important',
-    borderRadius: '5px',
+    border: "2px solid #0084A8 !important",
+    borderRadius: "5px",
   },
 });
 
@@ -50,120 +50,136 @@ export default function Home() {
   const [outputStockMovimentation, setOutputStockMovimentation] = useState([]);
 
   const [inputChartSettings, setInputChartSettings] = useState({
-    type: 'bar',
+    type: "bar",
     plot: {
       valueBox: {
-        text: '%v',
-      }
+        text: "%v",
+      },
     },
     title: {
-      text: 'ENTRADA SEMANAL',
+      text: "ENTRADA SEMANAL",
       fontSize: 20,
-      fontColor: '#0084A8',
-      fontFamily: 'Roboto',
-      textAlign: 'center',
+      fontColor: "#0084A8",
+      fontFamily: "Helvetica",
+      textAlign: "center",
       adjustLayout: true,
     },
     scaleX: {
-      values: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+      values: [
+        "Segunda",
+        "Terça",
+        "Quarta",
+        "Quinta",
+        "Sexta",
+        "Sábado",
+        "Domingo",
+      ],
     },
-    series: [{
-      values: []
-    }]
+    series: [
+      {
+        values: [],
+      },
+    ],
   });
 
   const [outputChartSettings, setOutputChartSettings] = useState({
-    type: 'bar',
+    type: "bar",
     plot: {
       backgroundColor: "#F47500",
       valueBox: {
-        text: '%v',
-      }
+        text: "%v",
+      },
     },
     title: {
-      text: 'SAÍDA SEMANAL',
+      text: "SAÍDA SEMANAL",
       fontSize: 20,
-      fontColor: '#F47500',
-      fontFamily: 'Roboto',
-      textAlign: 'center',
+      fontColor: "#F47500",
+      fontFamily: "Helvetica",
+      textAlign: "center",
       adjustLayout: true,
     },
     scaleX: {
-      values: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+      values: [
+        "Segunda",
+        "Terça",
+        "Quarta",
+        "Quinta",
+        "Sexta",
+        "Sábado",
+        "Domingo",
+      ],
     },
-    series: [{
-      values: outputStockMovimentation
-    }]
+    series: [
+      {
+        values: outputStockMovimentation,
+      },
+    ],
   });
 
   const [gaugeChartSettings, setGaugeChartSettings] = useState({
-    "type": "gauge",
-    "title": {
-      "text": "CAPACIDADE DE ESTOQUE"
+    type: "gauge",
+    title: {
+      text: "CAPACIDADE DE ESTOQUE",
     },
-    "plotarea":{
-      "marginTop":80
+    plotarea: {
+      marginTop: 80,
     },
     "scale-r": {
-      "aperture": 200,
-      "values": "0:100:25",
-      "center": {
-        "size": 5,
+      aperture: 200,
+      values: "0:100:25",
+      center: {
+        size: 5,
         "background-color": "#66CCFF #FFCCFF",
-        "border-color": "none"
+        "border-color": "none",
       },
-      "ring": {
-        "size": 5,
-        "rules": [
+      ring: {
+        size: 5,
+        rules: [
           {
-            "rule": "%v >= 0 && %v <= 20",
-            "background-color": "red"
+            rule: "%v >= 0 && %v <= 20",
+            "background-color": "red",
           },
           {
-            "rule": "%v >= 20 && %v <= 40",
-            "background-color": "orange"
+            rule: "%v >= 20 && %v <= 40",
+            "background-color": "orange",
           },
           {
-            "rule": "%v >= 40 && %v <= 60",
-            "background-color": "yellow"
+            rule: "%v >= 40 && %v <= 60",
+            "background-color": "yellow",
           },
           {
-            "rule": "%v >= 60 && %v <= 80",
-            "background-color": "green"
-          }
-        ]
+            rule: "%v >= 60 && %v <= 80",
+            "background-color": "green",
+          },
+        ],
       },
-      "labels": ["0%", "25%", "50%", "75%", "100%"]  //Scale Labels
+      labels: ["0%", "25%", "50%", "75%", "100%"], //Scale Labels
     },
-    "tick":{
-      "line-color":"#66CCFF",
-      "line-style":"solid",
-      "line-width":3,
-      "size":15,
-      "placement":"inner"
+    tick: {
+      "line-color": "#66CCFF",
+      "line-style": "solid",
+      "line-width": 3,
+      size: 15,
+      placement: "inner",
     },
-    "tooltip":{
-      "text":"%v%",
+    tooltip: {
+      text: "%v%",
     },
-    "series": [
-      { "values": [] }
-    ]
+    series: [{ values: [] }],
   });
 
   const getStockMovimentationPerWeek = () => {
-    UserService.getStockHistoryPerWeek().then(
-      (response) => {
-        let inputMovimentationl = [];
-        let outputMovimentationl = [];
-        for (let i = 0; i < response.data.length; i++) {
-          inputMovimentationl.push(response.data[i].input);
-          outputMovimentationl.push(response.data[i].output);
-        }
-
-        setInputStockMovimentation(inputMovimentationl);
-        setOutputStockMovimentation(outputMovimentationl);
+    UserService.getStockHistoryPerWeek().then((response) => {
+      let inputMovimentationl = [];
+      let outputMovimentationl = [];
+      for (let i = 0; i < response.data.length; i++) {
+        inputMovimentationl.push(response.data[i].input);
+        outputMovimentationl.push(response.data[i].output);
       }
-    );
+
+      setInputStockMovimentation(inputMovimentationl);
+      setOutputStockMovimentation(outputMovimentationl);
+    });
   };
 
   useEffect(() => {
@@ -178,67 +194,139 @@ export default function Home() {
   }, [isLogged]);
 
   useEffect(() => {
-    zingchart.exec('inputChart', 'setseriesvalues', { values: [inputStockMovimentation] });
-    zingchart.exec('outputChart', 'setseriesvalues', { values: [outputStockMovimentation] });
-    console.log('capacity');
-    console.log((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0)));
-    console.log(((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0))/process.env.REACT_APP_WAREHOUSE_CAPACITY)*100);
-    console.log(process.env.REACT_APP_WAREHOUSE_CAPACITY)
-    let percentualValue = ((inputStockMovimentation.reduce((a, b) => a + b, 0) - outputStockMovimentation.reduce((a, b) => a + b, 0))/process.env.REACT_APP_WAREHOUSE_CAPACITY)*100;
-    console.log('percentualValue', Math.round(percentualValue));
-    zingchart.exec('gaugeChart', 'setseriesvalues', { values: [[percentualValue]] });
+    zingchart.exec("inputChart", "setseriesvalues", {
+      values: [inputStockMovimentation],
+    });
+    zingchart.exec("outputChart", "setseriesvalues", {
+      values: [outputStockMovimentation],
+    });
+    console.log("capacity");
+    console.log(
+      inputStockMovimentation.reduce((a, b) => a + b, 0) -
+        outputStockMovimentation.reduce((a, b) => a + b, 0)
+    );
+    console.log(
+      ((inputStockMovimentation.reduce((a, b) => a + b, 0) -
+        outputStockMovimentation.reduce((a, b) => a + b, 0)) /
+        process.env.REACT_APP_WAREHOUSE_CAPACITY) *
+        100
+    );
+    console.log(process.env.REACT_APP_WAREHOUSE_CAPACITY);
+    let percentualValue =
+      ((inputStockMovimentation.reduce((a, b) => a + b, 0) -
+        outputStockMovimentation.reduce((a, b) => a + b, 0)) /
+        process.env.REACT_APP_WAREHOUSE_CAPACITY) *
+      100;
+    console.log("percentualValue", Math.round(percentualValue));
+    zingchart.exec("gaugeChart", "setseriesvalues", {
+      values: [[percentualValue]],
+    });
   }, [inputStockMovimentation, outputStockMovimentation]);
 
   const renderContent = () => {
     if (isLogged) {
-      return <>
-        <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
-          <ZingChart id="inputChart" data={inputChartSettings} height={500} width={900} />
-          <ZingChart id="outputChart" data={outputChartSettings} height={500} width={900} />
-        </div>
-        <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
-          <ZingChart id="gaugeChart" data={gaugeChartSettings} height={500} width={900} />
-        </div>
-      </>;
+      return (
+        <>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
+            }}>
+            <ZingChart
+              id="inputChart"
+              data={inputChartSettings}
+              height={400}
+              width={800}
+            />
+            <ZingChart
+              id="outputChart"
+              data={outputChartSettings}
+              height={400}
+              width={800}
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "50px",
+            }}>
+            <ZingChart
+              id="gaugeChart"
+              data={gaugeChartSettings}
+              height={500}
+              width={900}
+            />
+          </div>
+        </>
+      );
     } else {
       return (
-        <Grid container spacing={3}>
-          <Box mt={4} m="auto">
-            Você não está logado! Autentifique-se
-          </Box>
-        </Grid>
+        <Container maxWidth="md" align="center" style={{ paddingTop: "5rem" }}>
+          <Typography>Você não está logado</Typography>
+        </Container>
       );
     }
   };
 
   return (
-    <div className={classes.root}>
-      <Navbar
-        isLogged={isLogged}
-        user={user}
-        onLogin={() => {
-          setIsLogged(true);
-          getUserFromStorage();
-        }}
-        onLogout={() => {
-          setIsLogged(false);
-        }}
-        onChangeScreen={(screen) => {
-          // setScreenLabel(screen);
-        }}
-      />
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      {renderContent()}
-    </div>
+    <Box display="flex" flexDirection="row">
+      <Navbar />
+      <Container
+        display="flex"
+        flexDirection="column"
+        maxWidth="xl"
+        align="center">
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        {renderContent()}
+      </Container>
+    </Box>
+
+    // <div className={classes.root}>
+    //   <Navbar
+    //     isLogged={isLogged}
+    //     user={user}
+    //     onLogin={() => {
+    //       setIsLogged(true);
+    //       getUserFromStorage();
+    //     }}
+    //     onLogout={() => {
+    //       setIsLogged(false);
+    //     }}
+    //     onChangeScreen={(screen) => {
+    //       // setScreenLabel(screen);
+    //     }}
+    //   />
+    //   <ToastContainer
+    //     position="bottom-center"
+    //     autoClose={3000}
+    //     hideProgressBar={false}
+    //     newestOnTop={false}
+    //     closeOnClick
+    //     rtl={false}
+    //     pauseOnFocusLoss
+    //     draggable
+    //     pauseOnHover
+    //   />
+
+    // </div>
   );
 }
