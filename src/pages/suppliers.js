@@ -115,7 +115,7 @@ export default function Suppliers() {
       addressNumber: supplierAddressNumber,
     }).then(
       (response) => {
-        toast.success("Supplier created successfully");
+        toast.success("Fornecedor criado com sucesso!");
         getSuppliers();
       },
       (error) => {
