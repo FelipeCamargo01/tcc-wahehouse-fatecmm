@@ -23,7 +23,8 @@ import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import ListAlt from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 import { Link } from "react-router-dom";
 
 require("./css/navbar.css");
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   linkStyle: {
     textDecoration: "none",
     color: "#E9E9EB",
+    width: "100%",
   },
 }));
 
@@ -125,10 +127,9 @@ export default function Navbar(props) {
           startIcon={<LockOpenIcon />}
           fullWidth
           disableElevation
-          onClick={onClickSignIn}>
-          <a className={classes.linkStyle} href="/signIn">
-            Login
-          </a>
+          onClick={onClickSignIn}
+          href="/signIn">
+          Login
         </Button>
       );
     }

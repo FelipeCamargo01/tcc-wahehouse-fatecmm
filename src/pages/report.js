@@ -1,9 +1,18 @@
-import { Typography, Container, Box, Grid } from "@material-ui/core";
+import {
+  Typography,
+  Container,
+  Box,
+  Grid,
+  Icon,
+  Button,
+} from "@material-ui/core";
 import MaterialTable from "@material-table/core";
 import Navbar from "./navbar";
 import { useState, useEffect } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
+import LaunchIcon from "@material-ui/icons/Launch";
+import * as XLSX from "xlsx/xlsx.mjs";
 
 import UserService from "../services/user.service";
 
@@ -67,6 +76,18 @@ export default function Report() {
     });
   };
 
+  const exportExcel = () => {
+    const workSheet = XLSX.utils.json_to_sheet(productsData);
+    const workBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workBook, workSheet, "product_report");
+
+    let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+
+    let date = new Date().toLocaleString();
+    XLSX.writeFile(workBook, "product_report_" + date + ".xlsx");
+  };
+
   useEffect(() => {
     async function fetchData() {
       await getProductSuppliers();
@@ -78,7 +99,7 @@ export default function Report() {
   const renderReportData = () => {
     if (isLogged) {
       return (
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" style={{ paddingTop: "5rem" }}>
           <Grid container>
             <Grid item xs={12}>
               <Box className={classes.formContainer}>
@@ -86,7 +107,7 @@ export default function Report() {
                   <Grid item xs={12} sm={12}>
                     <div style={{ height: "100vh" }}>
                       <MaterialTable
-                        title="Produtos"
+                        title="Relatório"
                         columns={productsColumns}
                         data={productsData}
                         localization={{
@@ -124,6 +145,7 @@ export default function Report() {
                           },
                         }}
                         options={{
+                          exportMenu: true,
                           filtering: true,
                           actionsColumnIndex: -1,
                           addRowPosition: "first",
@@ -131,6 +153,21 @@ export default function Report() {
                           paging: true,
                           tableLayout: "auto",
                         }}
+                        actions={[
+                          {
+                            icon: () => (
+                              <Button
+                                color="primary"
+                                variant="contained"
+                                disableElevation
+                                startIcon={<LaunchIcon />}>
+                                Exportar
+                              </Button>
+                            ),
+                            onClick: () => exportExcel(),
+                            isFreeAction: true,
+                          },
+                        ]}
                       />
                     </div>
                   </Grid>

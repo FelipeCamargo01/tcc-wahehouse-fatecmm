@@ -211,13 +211,13 @@ export default function Home() {
 
   const getWidthToBarGraph = () => {
     let dashboardWidth = document.getElementById("dashboard")?.offsetWidth;
-    if(dashboardWidth) {
-      console.log(dashboardWidth*0.45);
-      return dashboardWidth*0.45;
+    if (dashboardWidth) {
+      console.log(dashboardWidth * 0.45);
+      return dashboardWidth * 0.45;
     }
-    
+
     return 0;
-  }
+  };
 
   const renderContent = () => {
     if (isLogged) {
@@ -230,7 +230,7 @@ export default function Home() {
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
-              marginTop: '30px'
+              marginTop: "30px",
             }}>
             <ZingChart
               id="inputChart"

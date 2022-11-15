@@ -18,6 +18,8 @@ import UserService from "../services/user.service";
 
 import MaterialTable, { Column } from "@material-table/core";
 import InputMask from "react-input-mask";
+import SaveIcon from "@material-ui/icons/Save";
+import ClearIcon from "@material-ui/icons/Clear";
 
 //css imports
 require("./css/forms.css");
@@ -99,6 +101,18 @@ export default function Suppliers() {
   useEffect(() => {
     getUserFromStorage();
   }, [isLogged]);
+
+  const resetData = () => {
+    setSupplierCNPJ("");
+    setSupplierName(null);
+    setSupplierCorporateName(null);
+    setSupplierFantasyName(null);
+    setSupplierAddress(null);
+    setSupplierCEP("");
+    setSupplierAddressNumber(null);
+    setSupplierEmail(null);
+    setSupplierPhone("");
+  };
 
   const createSupplier = (event) => {
     event.preventDefault();
@@ -323,7 +337,8 @@ export default function Suppliers() {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disableElevation>
+                  disableElevation
+                  startIcon={<SaveIcon />}>
                   Salvar
                 </Button>
               </Grid>
@@ -332,7 +347,9 @@ export default function Suppliers() {
                   type="reset"
                   variant="contained"
                   color="inherit"
-                  disableElevation>
+                  disableElevation
+                  startIcon={<ClearIcon />}
+                  onClick={resetData}>
                   Limpar
                 </Button>
               </Grid>

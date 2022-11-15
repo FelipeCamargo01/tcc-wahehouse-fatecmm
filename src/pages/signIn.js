@@ -13,6 +13,9 @@ import Container from "@material-ui/core/Container";
 import AuthService from "../services/auth.service";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { InputAdornment } from "@material-ui/core";
+import { AccountCircle } from "@material-ui/icons";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -34,14 +37,13 @@ export default function SignIn() {
     AuthService.login(email, password)
       .then((data) => {
         console.log(data);
-        if(data.message === 'Error') {
+        if (data.message === "Error") {
           setErrorLogin(true);
-        }
-        else {
+        } else {
           history.push({
             pathname: "/",
           });
-        } 
+        }
       })
       .catch((error) => {
         setErrorLogin(true);
@@ -107,6 +109,7 @@ export default function SignIn() {
         <Grid container spacing={2} direction="row" justifyContent="center">
           <Grid item>
             <Button
+              startIcon={<LockOpenIcon />}
               type="submit"
               variant="contained"
               color="primary"
