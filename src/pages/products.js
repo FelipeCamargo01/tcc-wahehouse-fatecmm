@@ -237,21 +237,21 @@ export default function Product(props) {
 
               <Grid item xs={6}>
                 <Autocomplete
-                  freeSolo={true}
-                  value={selectedProductSupplier}
+                  disablePortal
                   options={searchProductSuppliersOptions}
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Fornecedores"
+                      value={selectedProductSupplier}
                       variant="outlined"
                       size="small"
-                      onChange={(event, option) =>
-                        setSelectedProductSupplier(option.value)
-                      }
                     />
                   )}
+                  onChange={(event, option) =>
+                    setSelectedProductSupplier(option.value)
+                  }
                 />
               </Grid>
               <Grid item xs={3}>
