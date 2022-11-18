@@ -9,8 +9,8 @@ class ProductController {
         const product = await Product.findOne({raw: true},{ where: { SKU: body.SKU } });
         if(!product) throw new Error('Produto não encontrado');
 
-        movimentationType = '';
-        movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
+        let movimentationType = '';
+        let movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
         //
         if(body.type === 0) {
             movimentationType = 'Saída';
