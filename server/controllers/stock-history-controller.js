@@ -11,7 +11,7 @@ class ProductController {
 
         movimentationType = '';
         movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
-
+        //
         if(body.type === 0) {
             movimentationType = 'Saída';
         }
