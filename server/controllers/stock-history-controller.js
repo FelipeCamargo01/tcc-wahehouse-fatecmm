@@ -11,6 +11,8 @@ class ProductController {
 
         let movimentationType = '';
         let movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
+
+        console.log(movimentationDate);
         //
         if(body.type === 0) {
             movimentationType = 'Saída';
