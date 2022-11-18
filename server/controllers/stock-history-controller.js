@@ -3,6 +3,7 @@ const ResponseParse = require("../utils/response-parse");
 const { Op } = require("sequelize");
 const momentUtil = require('../utils/moment');
 const moment = require('moment');
+moment().tz("America/Sao_Paulo").format();
 
 class ProductController {
     static async createStockHistory(body) {
@@ -43,6 +44,11 @@ class ProductController {
     static async getStockHistoryPerWeek() {
         let data = [
             {
+                label: 'Domingo',
+                input: 0,
+                output: 0
+            },
+            {
                 label: 'Segunda',
                 input: 0,
                 output: 0
@@ -71,11 +77,6 @@ class ProductController {
                 label: 'Sábado',
                 input: 0,
                 output: 0
-            },
-            {
-                label: 'Domingo',
-                input: 0,
-                output: 0
             }
         ];
 
@@ -89,7 +90,7 @@ class ProductController {
         ] } });
 
         for(let i = 0; i < stockHistory.length; i++) {
-            let day = stockHistory[i].actionDate.getDay();
+            let day = moment(stockHistory[i].actionDate).day();
             if(stockHistory[i].type === 'Entrada') {
                 data[day].input += stockHistory[i].quantity;
             } else if(stockHistory[i].type === 'Saída') {
