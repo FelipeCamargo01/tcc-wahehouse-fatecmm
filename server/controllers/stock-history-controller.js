@@ -3,17 +3,30 @@ const ResponseParse = require("../utils/response-parse");
 const { Op } = require("sequelize");
 const momentUtil = require('../utils/moment');
 const moment = require('moment');
+moment().tz("America/Sao_Paulo").format();
 
 class ProductController {
     static async createStockHistory(body) {
         const product = await Product.findOne({raw: true},{ where: { SKU: body.SKU } });
         if(!product) throw new Error('Produto não encontrado');
 
+        let movimentationType = '';
+        let movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
+
+        console.log(movimentationDate);
+        //
+        if(body.type === 0) {
+            movimentationType = 'Saída';
+        }
+        else if(body.type === 1) {
+            movimentationType = 'Entrada';
+        }
+
         await StockHistory.create({
-            type: body.type,
+            type: movimentationType,
             productId: product.SKU,
             quantity: body.quantity,
-            actionDate: moment(body.actionDate).format('YYYY-MM-DD HH:mm:ss')
+            actionDate: movimentationDate
         });
 
         return ResponseParse.response("OK", 'Movimentação criada com sucesso!');
@@ -30,6 +43,11 @@ class ProductController {
 
     static async getStockHistoryPerWeek() {
         let data = [
+            {
+                label: 'Domingo',
+                input: 0,
+                output: 0
+            },
             {
                 label: 'Segunda',
                 input: 0,
@@ -59,11 +77,6 @@ class ProductController {
                 label: 'Sábado',
                 input: 0,
                 output: 0
-            },
-            {
-                label: 'Domingo',
-                input: 0,
-                output: 0
             }
         ];
 
@@ -77,7 +90,7 @@ class ProductController {
         ] } });
 
         for(let i = 0; i < stockHistory.length; i++) {
-            let day = stockHistory[i].actionDate.getDay();
+            let day = moment(stockHistory[i].actionDate).day();
             if(stockHistory[i].type === 'Entrada') {
                 data[day].input += stockHistory[i].quantity;
             } else if(stockHistory[i].type === 'Saída') {
