@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import MaterialTable from "@material-table/core";
 import Navbar from "./navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -53,6 +53,7 @@ export default function Report() {
   const [filter, setFilter] = useState("0");
   const [filteredProductsData, setFilteredProductsData] =
     useState(productsData);
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
   const classes = useStyles();
 
@@ -70,6 +71,7 @@ export default function Report() {
         });
       }
       setProductsData(products);
+      setFilteredProductsData(products);
     });
   };
 
@@ -90,20 +92,22 @@ export default function Report() {
   useEffect(() => {
     console.log(filter);
     if (filter === "0") {
-      setFilteredProductsData(productsData);
+      setFilteredProductsData([...productsData]);
     }
     if (filter === "1") {
-      setFilteredProductsData(productsData.filter((e) => e.quantity > 0));
+      let productsFiltered = productsData.filter((e) => e.quantity > 0);
+      setFilteredProductsData([...productsFiltered]);
     }
     if (filter === "2") {
-      setFilteredProductsData(productsData.filter((e) => e.quantity == 0));
+      let productsFiltered = productsData.filter((e) => e.quantity <= 0);
+      setFilteredProductsData([...productsFiltered]);
     }
   }, [filter]);
 
   const renderReportData = () => {
     if (isLogged) {
       return (
-        <Container maxWidth="lg">
+        <Container>
           <Grid container>
             <Grid item xs={12}>
               <Box className={classes.formContainer}>
@@ -155,6 +159,7 @@ export default function Report() {
                           columnResizable: true,
                           paging: true,
                           tableLayout: "auto",
+                          pageSize: 10,
                         }}
                         actions={[
                           {
@@ -162,9 +167,9 @@ export default function Report() {
                               <Select
                                 value={filter}
                                 onChange={(e) => setFilter(e.target.value)}>
-                                <MenuItem value={"0"}>Todos</MenuItem>
-                                <MenuItem value={"1"}>Em Estoque</MenuItem>
-                                <MenuItem value={"2"}>Sem Estoque</MenuItem>
+                                <MenuItem value="0">Todos</MenuItem>
+                                <MenuItem value="1">Em Estoque</MenuItem>
+                                <MenuItem value="2">Sem Estoque</MenuItem>
                               </Select>
                             ),
                             isFreeAction: true,
