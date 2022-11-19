@@ -10,20 +10,8 @@ class ProductController {
         const product = await Product.findOne({raw: true},{ where: { SKU: body.SKU } });
         if(!product) throw new Error('Produto não encontrado');
 
-        let movimentationType = '';
-        let movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
-
-        console.log(movimentationDate);
-        //
-        if(body.type === 0) {
-            movimentationType = 'Saída';
-        }
-        else if(body.type === 1) {
-            movimentationType = 'Entrada';
-        }
-
         await StockHistory.create({
-            type: movimentationType,
+            type: body.type,
             productId: product.SKU,
             quantity: body.quantity,
             actionDate: moment(body.actionDate)
@@ -90,10 +78,7 @@ class ProductController {
         ] } });
 
         for(let i = 0; i < stockHistory.length; i++) {
-            let dayTest = moment(stockHistory[i].actionDate).day();
-            console.log(moment(stockHistory[i].actionDate));
-            console.log(dayTest);
-            let day = stockHistory[i].actionDate.getDay();
+            const day = moment(stockHistory[i].actionDate).day();
             if(stockHistory[i].type === 'Entrada') {
                 data[day].input += stockHistory[i].quantity;
             } else if(stockHistory[i].type === 'Saída') {

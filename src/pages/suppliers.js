@@ -45,7 +45,6 @@ export default function Suppliers() {
     }
   };
 
-  const [supplierName, setSupplierName] = useState(null);
   const [supplierEmail, setSupplierEmail] = useState(null);
   const [supplierPhone, setSupplierPhone] = useState(null);
   const [supplierAddress, setSupplierAddress] = useState(null);
@@ -104,7 +103,6 @@ export default function Suppliers() {
 
   const resetData = () => {
     setSupplierCNPJ("");
-    setSupplierName(null);
     setSupplierCorporateName(null);
     setSupplierFantasyName(null);
     setSupplierAddress(null);
@@ -408,7 +406,6 @@ export default function Suppliers() {
                       onRowDelete: (selectedRow) =>
                         new Promise((resolve, reject) => {
                           try {
-                            console.log(selectedRow);
                             deleteSupplier(selectedRow.id);
                             resolve();
                           } catch (error) {

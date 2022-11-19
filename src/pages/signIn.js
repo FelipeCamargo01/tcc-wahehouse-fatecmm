@@ -32,11 +32,9 @@ export default function SignIn() {
   });
 
   const onSubmit = (event) => {
-    console.log("onsubmit");
     event.preventDefault();
     AuthService.login(email, password)
       .then((data) => {
-        console.log(data);
         if (data.message === "Error") {
           setErrorLogin(true);
         } else {
