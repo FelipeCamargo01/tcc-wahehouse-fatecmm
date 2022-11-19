@@ -219,7 +219,7 @@ export default function Suppliers() {
                   )}
                 </InputMask>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={6}>
                 <TextField
                   variant="outlined"
                   label="Razão Social"
@@ -408,6 +408,7 @@ export default function Suppliers() {
                       onRowDelete: (selectedRow) =>
                         new Promise((resolve, reject) => {
                           try {
+                            console.log(selectedRow);
                             deleteSupplier(selectedRow.id);
                             resolve();
                           } catch (error) {

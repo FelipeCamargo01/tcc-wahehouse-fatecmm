@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 
 class ProductController {
   static async createProduct(body) {
+    console.log(body);
     await Product.create({
       name: body.name,
       SKU: body.SKU,
@@ -27,6 +28,7 @@ class ProductController {
   }
 
   static async deleteProduct(body) {
+    console.log(body);
     await StockHistory.destroy({ where: { productId: body.sku } });
     await Product.destroy({ where: { SKU: body.sku } });
 
@@ -90,16 +92,19 @@ class ProductController {
     });
 
     for (const stockMovimentation of stockMovimentationOutput) {
+      console.log(stockMovimentation.totalQuantity);
       productMap.get(stockMovimentation.productId).quantity -= parseInt(
         stockMovimentation.totalQuantity
       );
     }
     for (const stockMovimentation of stockMovimentationInput) {
+      console.log(stockMovimentation.totalQuantity);
       productMap.get(stockMovimentation.productId).quantity += parseInt(
         stockMovimentation.totalQuantity
       );
     }
 
+    console.log("########## PRODUCT #########" + productMap.size);
 
     return ResponseParse.response("OK", [...productMap.values()]);
   }

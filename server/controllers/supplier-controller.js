@@ -32,6 +32,7 @@ class SupplierController {
     }
     
     static async updateSupplier(body) {
+        console.log(body);
         await Supplier.update(
             {
                 email: body.email,

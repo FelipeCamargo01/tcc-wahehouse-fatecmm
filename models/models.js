@@ -52,6 +52,10 @@ const Supplier = connection.define(
       defaultValue: Sequelize.literal("uuid_generate_v4()"),
       primaryKey: true,
     },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     address: {
       type: Sequelize.STRING,
       allowNull: true,

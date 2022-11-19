@@ -375,6 +375,7 @@ export default function Product(props) {
                           onRowDelete: (selectedRow) =>
                             new Promise((resolve, reject) => {
                               try {
+                                console.log(selectedRow);
                                 deleteProduct(selectedRow.sku);
                                 resolve();
                               } catch (error) {

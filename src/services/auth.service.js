@@ -4,6 +4,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 class AuthService {
     login(email, password) {
+        console.log('API_URL');
+        console.log(API_URL);
         return axios.post(API_URL + '/auth/signIn', {
                 email,
                 password
