@@ -66,13 +66,13 @@ export default function Home() {
     },
     scaleX: {
       values: [
+        "Domingo",
         "Segunda",
         "Terça",
         "Quarta",
         "Quinta",
         "Sexta",
         "Sábado",
-        "Domingo",
       ],
     },
     series: [
@@ -100,13 +100,13 @@ export default function Home() {
     },
     scaleX: {
       values: [
+        "Domingo",
         "Segunda",
         "Terça",
         "Quarta",
         "Quinta",
         "Sexta",
         "Sábado",
-        "Domingo",
       ],
     },
     series: [

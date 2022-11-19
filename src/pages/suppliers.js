@@ -104,7 +104,6 @@ export default function Suppliers() {
   const createSupplier = (event) => {
     event.preventDefault();
     UserService.createSupplier({
-      name: supplierName,
       email: supplierEmail,
       phone: supplierPhone,
       address: supplierAddress,
@@ -131,7 +130,6 @@ export default function Suppliers() {
         for (const supplier of response.data) {
           suppliers.push({
             id: supplier.id,
-            name: supplier.name,
             email: supplier.email,
             phone: supplier.phone,
             address: supplier.address,
@@ -207,16 +205,6 @@ export default function Suppliers() {
                       required></TextField>
                   )}
                 </InputMask>
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  variant="outlined"
-                  label="Nome"
-                  value={supplierName}
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) => setSupplierName(e.target.value)}></TextField>
               </Grid>
               <Grid item xs={6}>
                 <TextField

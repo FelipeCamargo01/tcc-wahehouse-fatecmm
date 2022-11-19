@@ -6,7 +6,6 @@ class SupplierController {
         await Supplier.create({
             email: body.email,
             address: body.address,
-            name: body.name,
             phone: body.phone,
             cnpj: body.cnpj,
             corporateName: body.corporateName,
@@ -38,7 +37,6 @@ class SupplierController {
             {
                 email: body.email,
                 address: body.address,
-                name: body.name,
                 phone: body.phone,
                 cnpj: body.cnpj,
                 corporateName: body.corporateName,

@@ -2,7 +2,8 @@ const { StockHistory, Product } = require('../../models/models');
 const ResponseParse = require("../utils/response-parse");
 const { Op } = require("sequelize");
 const momentUtil = require('../utils/moment');
-const moment = require('moment');
+const moment = require('moment')
+moment.tz.setDefault('America/Sao_Paulo');
 
 class ProductController {
     static async createStockHistory(body) {
@@ -13,7 +14,7 @@ class ProductController {
             type: body.type,
             productId: product.SKU,
             quantity: body.quantity,
-            actionDate: moment(body.actionDate).format('YYYY-MM-DD HH:mm:ss')
+            actionDate: moment(body.actionDate)
         });
 
         return ResponseParse.response("OK", 'Movimentação criada com sucesso!');
@@ -30,6 +31,11 @@ class ProductController {
 
     static async getStockHistoryPerWeek() {
         let data = [
+            {
+                label: 'Domingo',
+                input: 0,
+                output: 0
+            },
             {
                 label: 'Segunda',
                 input: 0,
@@ -59,11 +65,6 @@ class ProductController {
                 label: 'Sábado',
                 input: 0,
                 output: 0
-            },
-            {
-                label: 'Domingo',
-                input: 0,
-                output: 0
             }
         ];
 
@@ -77,6 +78,9 @@ class ProductController {
         ] } });
 
         for(let i = 0; i < stockHistory.length; i++) {
+            let dayTest = moment(stockHistory[i].actionDate).day();
+            console.log(moment(stockHistory[i].actionDate));
+            console.log(dayTest);
             let day = stockHistory[i].actionDate.getDay();
             if(stockHistory[i].type === 'Entrada') {
                 data[day].input += stockHistory[i].quantity;
