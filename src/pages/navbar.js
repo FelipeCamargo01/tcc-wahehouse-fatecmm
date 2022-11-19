@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+
 import { useHistory } from "react-router";
 import Box from "@material-ui/core/Box";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
+
 import {
   Drawer,
   List,
@@ -24,6 +22,11 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import ListAlt from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+
+import userService from "../services/user.service";
+
 import { Link } from "react-router-dom";
 
 require("./css/navbar.css");
@@ -41,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   linkStyle: {
     textDecoration: "none",
     color: "#E9E9EB",
+    width: "100%",
   },
 }));
 
@@ -51,6 +55,7 @@ export default function Navbar(props) {
   const isProfileMenuOpen = Boolean(anchorEl);
 
   const [user, setUser] = useState(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const [isLogged, setIsLogged] = useState(null);
 
   const getUserFromStorage = () => {
@@ -58,6 +63,11 @@ export default function Navbar(props) {
     if (user) {
       setUser(user);
       setIsLogged(true);
+      userService.verifyIfUserIsAdmin({ id: user.id }).then((response) => {
+        if (response) {
+          setIsAdminUser(true);
+        }
+      });
     } else {
       setUser(null);
       setIsLogged(false);
@@ -83,7 +93,7 @@ export default function Navbar(props) {
 
   const logout = () => {
     localStorage.removeItem("user");
-    window.location.reload(true)
+    window.location.reload(true);
   };
 
   const renderLogin = () => {
@@ -92,6 +102,7 @@ export default function Navbar(props) {
         <Box>
           <Box>
             <Typography
+              align="center"
               variant="h6"
               className={classes.profileName}
               component="h6"
@@ -110,8 +121,6 @@ export default function Navbar(props) {
             PaperProps={{
               style: {
                 width: "20ch",
-                backgroundColor: "orange",
-                color: "#E9E9EB",
               },
             }}>
             <MenuItem onClick={logout}>Logout</MenuItem>
@@ -123,13 +132,29 @@ export default function Navbar(props) {
         <Button
           color="primary"
           variant="contained"
+          startIcon={<LockOpenIcon />}
+          fullWidth
           disableElevation
-          onClick={onClickSignIn}>
-          <a className={classes.linkStyle} href="/signIn">
-            Login
-          </a>
+          onClick={onClickSignIn}
+          href="/signIn">
+          Login
         </Button>
       );
+    }
+  };
+
+  const renderNewUserRegister = () => {
+    if (isAdminUser) {
+      return (
+        <ListItem button component={Link} to={"/signUp"}>
+          <ListItemIcon>
+            <PersonAddIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Cadastrar Usuário" />
+        </ListItem>
+      );
+    } else {
+      return;
     }
   };
 
@@ -171,6 +196,7 @@ export default function Navbar(props) {
               <ListItemText primary="Relatório" />
             </ListItem>
           </List>
+          <List style={{ marginTop: "21rem" }}>{renderNewUserRegister()}</List>
         </Drawer>
       );
     } else {

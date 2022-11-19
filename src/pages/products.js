@@ -24,6 +24,8 @@ import {
   Paper,
 } from "@material-ui/core";
 
+import SaveIcon from "@material-ui/icons/Save";
+import ClearIcon from "@material-ui/icons/Clear";
 
 //css imports
 require("./css/forms.css");
@@ -94,6 +96,15 @@ export default function Product(props) {
     }
     fetchData();
   }, []);
+
+  const resetData = () => {
+    setProductSKU(null);
+    setProductBatchNumber(null);
+    setProductName(null);
+    setSelectedProductSupplier(null);
+    setProductPrice(null);
+    setProductDescription("");
+  };
 
   const createProduct = (event) => {
     event.preventDefault();
@@ -228,19 +239,19 @@ export default function Product(props) {
                 <Autocomplete
                   disablePortal
                   options={searchProductSuppliersOptions}
+                  getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Fornecedores"
+                      value={selectedProductSupplier}
                       variant="outlined"
                       size="small"
-                      value={selectedProductSupplier}
                     />
                   )}
                   onChange={(event, option) =>
                     setSelectedProductSupplier(option.value)
                   }
-                  getOptionLabel={(option) => option.name}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -282,7 +293,8 @@ export default function Product(props) {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  disableElevation>
+                  disableElevation
+                  startIcon={<SaveIcon />}>
                   Salvar
                 </Button>
               </Grid>
@@ -291,7 +303,9 @@ export default function Product(props) {
                   type="reset"
                   variant="contained"
                   color="inherit"
-                  disableElevation>
+                  disableElevation
+                  startIcon={<ClearIcon />}
+                  onClick={resetData}>
                   Limpar
                 </Button>
               </Grid>
@@ -311,7 +325,7 @@ export default function Product(props) {
   const renderProductData = () => {
     if (isLogged) {
       return (
-        <Grid style={{ paddingLeft: '60px', paddingRight: '60px' }} container>
+        <Grid style={{ paddingLeft: "60px", paddingRight: "60px" }} container>
           <Grid container>
             <Grid item xs={12}>
               <Box className={classes.formContainer}>
@@ -380,7 +394,7 @@ export default function Product(props) {
                           columnResizable: true,
                           paging: true,
                           tableLayout: "auto",
-                          pageSize: 10
+                          pageSize: 10,
                         }}
                       />
                     </div>
@@ -397,8 +411,13 @@ export default function Product(props) {
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
-      <div style={{ display: 'flex', flexDirection: 'column', width: '100%', align: 'center' }}>
-
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          align: "center",
+        }}>
         {renderProductForm()}
         <ToastContainer
           position="bottom-center"
@@ -413,7 +432,6 @@ export default function Product(props) {
         />
         {renderProductData()}
       </div>
-
     </Box>
   );
 }

@@ -13,20 +13,22 @@ class AuthController {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       password: bcrypt.hashSync(req.body.password, 8),
-      role: 'user'
+      role: "user",
     })
       .then((user) => {
         var token = jwt.sign({ id: user.id }, config.secret, {
           expiresIn: "9999 years",
         });
 
-        res.status(200).send(ResponseParse.response("OK", {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          accessToken: token,
-        }));
+        res.status(200).send(
+          ResponseParse.response("OK", {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            accessToken: token,
+          })
+        );
       })
       .catch((err) => {
         throw new APIError(err.message);
