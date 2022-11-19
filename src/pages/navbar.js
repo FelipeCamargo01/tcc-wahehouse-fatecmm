@@ -23,7 +23,9 @@ import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import ListAlt from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+
+import userService from "../services/user.service";
 
 import { Link } from "react-router-dom";
 
@@ -53,6 +55,7 @@ export default function Navbar(props) {
   const isProfileMenuOpen = Boolean(anchorEl);
 
   const [user, setUser] = useState(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const [isLogged, setIsLogged] = useState(null);
 
   const getUserFromStorage = () => {
@@ -60,6 +63,11 @@ export default function Navbar(props) {
     if (user) {
       setUser(user);
       setIsLogged(true);
+      userService.verifyIfUserIsAdmin({ id: user.id }).then((response) => {
+        if (response) {
+          setIsAdminUser(true);
+        }
+      });
     } else {
       setUser(null);
       setIsLogged(false);
@@ -135,6 +143,21 @@ export default function Navbar(props) {
     }
   };
 
+  const renderNewUserRegister = () => {
+    if (isAdminUser) {
+      return (
+        <ListItem button component={Link} to={"/signUp"}>
+          <ListItemIcon>
+            <PersonAddIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Cadastrar Usuário" />
+        </ListItem>
+      );
+    } else {
+      return;
+    }
+  };
+
   const renderDrawer = () => {
     if (isLogged) {
       return (
@@ -173,6 +196,7 @@ export default function Navbar(props) {
               <ListItemText primary="Relatório" />
             </ListItem>
           </List>
+          <List style={{ marginTop: "21rem" }}>{renderNewUserRegister()}</List>
         </Drawer>
       );
     } else {

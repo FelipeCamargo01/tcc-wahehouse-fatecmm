@@ -107,23 +107,15 @@ export default function SignIn() {
           </Grid>
         </Grid>
         <Grid container spacing={2} direction="row" justifyContent="center">
-          <Grid item>
+          <Grid item xs={6}>
             <Button
               startIcon={<LockOpenIcon />}
               type="submit"
               variant="contained"
+              fullWidth
               color="primary"
               disableElevation>
               login
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              href="/signup"
-              variant="contained"
-              color="inherit"
-              disableElevation>
-              cadastrar
             </Button>
           </Grid>
         </Grid>
