@@ -13,7 +13,6 @@ class ProductController {
         let movimentationType = '';
         let movimentationDate = body.actionDate ? body.actionDate : moment().format('YYYY-MM-DD HH:mm:ss');
 
-        console.log(movimentationDate);
         //
         if(body.type === 0) {
             movimentationType = 'Saída';
@@ -91,8 +90,6 @@ class ProductController {
 
         for(let i = 0; i < stockHistory.length; i++) {
             let dayTest = moment(stockHistory[i].actionDate).day();
-            console.log(moment(stockHistory[i].actionDate));
-            console.log(dayTest);
             let day = stockHistory[i].actionDate.getDay();
             if(stockHistory[i].type === 'Entrada') {
                 data[day].input += stockHistory[i].quantity;
