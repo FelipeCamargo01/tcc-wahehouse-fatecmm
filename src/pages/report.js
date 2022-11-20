@@ -58,11 +58,10 @@ export default function Report() {
     UserService.getProductInfos().then((response) => {
       for (let i = 0; i < response.data.length; i++) {
         products.push({
-          id: response.data[i].id,
           name: response.data[i].name,
           sku: response.data[i].SKU,
           price: response.data[i].price,
-          supplier: response.data[i]["supplier.name"],
+          supplier: response.data[i]["supplier.fantasyName"],
           quantity: response.data[i].quantity,
         });
       }
