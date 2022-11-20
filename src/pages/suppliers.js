@@ -217,18 +217,7 @@ export default function Suppliers() {
                   )}
                 </InputMask>
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  variant="outlined"
-                  label="Razão Social"
-                  value={supplierCorporateName}
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) =>
-                    setSupplierCorporateName(e.target.value)
-                  }></TextField>
-              </Grid>
+              <Grid item xs={8} />
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
@@ -244,42 +233,13 @@ export default function Suppliers() {
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
-                  label="Endereço"
-                  value={supplierAddress}
+                  label="Razão Social"
+                  value={supplierCorporateName}
                   fullWidth
                   size="small"
                   required
                   onChange={(e) =>
-                    setSupplierAddress(e.target.value)
-                  }></TextField>
-              </Grid>
-              <Grid item xs={3}>
-                <InputMask
-                  mask={"99999-999"}
-                  value={supplierCEP}
-                  onChange={(e) => setSupplierCEP(e.target.value)}>
-                  {() => (
-                    <TextField
-                      variant="outlined"
-                      label="CEP"
-                      fullWidth
-                      size="small"
-                      required></TextField>
-                  )}
-                </InputMask>
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  variant="outlined"
-                  label="Nº"
-                  value={supplierAddressNumber}
-                  type="number"
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) =>
-                    setSupplierAddressNumber(e.target.value)
+                    setSupplierCorporateName(e.target.value)
                   }></TextField>
               </Grid>
 
@@ -312,28 +272,71 @@ export default function Suppliers() {
                   )}
                 </InputMask>
               </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  variant="outlined"
+                  label="Endereço"
+                  value={supplierAddress}
+                  fullWidth
+                  size="small"
+                  required
+                  onChange={(e) =>
+                    setSupplierAddress(e.target.value)
+                  }></TextField>
+              </Grid>
+              <Grid item xs={3}>
+                <InputMask
+                  mask={"99999-999"}
+                  value={supplierCEP}
+                  onChange={(e) => setSupplierCEP(e.target.value)}>
+                  {() => (
+                    <TextField
+                      variant="outlined"
+                      label="CEP"
+                      fullWidth
+                      size="small"
+                      required></TextField>
+                  )}
+                </InputMask>
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  variant="outlined"
+                  label="Nº"
+                  value={supplierAddressNumber}
+                  type="number"
+                  fullWidth
+                  size="small"
+                  required
+                  onChange={(e) =>
+                    setSupplierAddressNumber(e.target.value)
+                  }></TextField>
+              </Grid>
             </Grid>
             <Grid
               container
               spacing={2}
               direction="row"
               justifyContent="flex-end">
-              <Grid item>
+              <Grid item xs={2}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   disableElevation
+                  fullWidth
                   startIcon={<SaveIcon />}>
                   Salvar
                 </Button>
               </Grid>
-              <Grid item>
+              <Grid item xs={2}>
                 <Button
                   type="reset"
                   variant="contained"
                   color="inherit"
                   disableElevation
+                  fullWidth
                   startIcon={<ClearIcon />}
                   onClick={resetData}>
                   Limpar
@@ -358,7 +361,6 @@ export default function Suppliers() {
         <Grid style={{ paddingLeft: "60px", paddingRight: "60px" }} container>
           <Grid item xs={12}>
             <Box className={classes.formContainer}>
-              {/* <Grid container spacing={3}> */}
               <Grid item xs={12} sm={12}>
                 <div
                   style={{
@@ -430,7 +432,6 @@ export default function Suppliers() {
                   />
                 </div>
               </Grid>
-              {/* </Grid> */}
             </Box>
           </Grid>
         </Grid>

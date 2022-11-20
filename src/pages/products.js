@@ -55,6 +55,7 @@ export default function Product(props) {
   const [productsItems, setProductItems] = useState([]);
   const [productInfos, setProductInfos] = useState([]);
   const [productSuppliers, setProductSuppliers] = useState([]);
+  const [resetAutocomplete, setResetAutocomplete] = useState(true);
 
   const [productsData, setProductsData] = useState([]);
   const [productsColumns, setSuppliersColumns] = useState([
@@ -104,6 +105,7 @@ export default function Product(props) {
     setSelectedProductSupplier(null);
     setProductPrice(null);
     setProductDescription("");
+    setResetAutocomplete(!resetAutocomplete);
   };
 
   const createProduct = (event) => {
@@ -157,11 +159,10 @@ export default function Product(props) {
       let productSuppliersOptions = [];
       for (const supplier of response.data) {
         productSuppliersOptions.push({
-          name: supplier.name,
+          fantasyName: supplier.fantasyName,
           value: supplier.id,
         });
       }
-
       setSearchProductSuppliersOptions(productSuppliersOptions);
     });
   };
@@ -211,20 +212,8 @@ export default function Product(props) {
                   required
                   onChange={(e) => setProductSKU(e.target.value)}></TextField>
               </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  variant="outlined"
-                  label="Lote"
-                  value={productBatchNumber}
-                  type="number"
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) =>
-                    setProductBatchNumber(e.target.value)
-                  }></TextField>
-              </Grid>
-              <Grid item xs={6}>
+
+              <Grid item xs={9}>
                 <TextField
                   variant="outlined"
                   label="Nome"
@@ -237,9 +226,11 @@ export default function Product(props) {
 
               <Grid item xs={6}>
                 <Autocomplete
+                  key={resetAutocomplete}
                   disablePortal
+                  disableClearable
                   options={searchProductSuppliersOptions}
-                  getOptionLabel={(option) => option.name}
+                  getOptionLabel={(option) => option.fantasyName}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -270,6 +261,19 @@ export default function Product(props) {
                     ),
                   }}></TextField>
               </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  variant="outlined"
+                  label="Lote"
+                  value={productBatchNumber}
+                  type="number"
+                  fullWidth
+                  size="small"
+                  required
+                  onChange={(e) =>
+                    setProductBatchNumber(e.target.value)
+                  }></TextField>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -288,22 +292,24 @@ export default function Product(props) {
               spacing={2}
               direction="row"
               justifyContent="flex-end">
-              <Grid item>
+              <Grid item xs={2}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   disableElevation
+                  fullWidth
                   startIcon={<SaveIcon />}>
                   Salvar
                 </Button>
               </Grid>
-              <Grid item>
+              <Grid item xs={2}>
                 <Button
                   type="reset"
                   variant="contained"
                   color="inherit"
                   disableElevation
+                  fullWidth
                   startIcon={<ClearIcon />}
                   onClick={resetData}>
                   Limpar

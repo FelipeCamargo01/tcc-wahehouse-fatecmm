@@ -16,6 +16,9 @@ import { useHistory } from "react-router";
 import userService from "../services/user.service";
 import Navbar from "./navbar";
 
+import SaveIcon from "@material-ui/icons/Save";
+import ClearIcon from "@material-ui/icons/Clear";
+
 export default function SignUp(props) {
   const history = useHistory();
   const [firstName, setFirstName] = useState(null);
@@ -76,10 +79,17 @@ export default function SignUp(props) {
       });
   };
 
+  const resetData = () => {
+    setFirstName(null);
+    setLastName(null);
+    setEmail(null);
+    setPassword(null);
+  };
+
   return (
     <Box display="flex" flexDirection="row">
       <Navbar />
-      <Container maxWidth="sm" align="center" style={{ paddingTop: "5rem" }}>
+      <Container maxWidth="md" align="center" style={{ paddingTop: "5rem" }}>
         <Typography
           textAlign="center"
           component="h1"
@@ -141,23 +151,28 @@ export default function SignUp(props) {
             </Grid>
           </Grid>
 
-          <Grid container spacing={2} direction="row" justifyContent="center">
-            <Grid item>
+          <Grid container spacing={2} direction="row" justifyContent="flex-end">
+            <Grid item xs={2}>
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                disableElevation>
+                disableElevation
+                fullWidth
+                startIcon={<SaveIcon />}>
                 Cadastrar
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={2}>
               <Button
-                href="/signin"
+                type="reset"
                 variant="contained"
                 color="inherit"
-                disableElevation>
-                Cancelar
+                disableElevation
+                fullWidth
+                startIcon={<ClearIcon />}
+                onClick={resetData}>
+                Limpar
               </Button>
             </Grid>
           </Grid>

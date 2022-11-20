@@ -146,7 +146,11 @@ export default function Navbar(props) {
   const renderNewUserRegister = () => {
     if (isAdminUser) {
       return (
-        <ListItem button component={Link} to={"/signUp"}>
+        <ListItem
+          button
+          component={Link}
+          to={"/signUp"}
+          style={{ bottom: "5px", position: "absolute" }}>
           <ListItemIcon>
             <PersonAddIcon color="primary" />
           </ListItemIcon>
@@ -166,7 +170,7 @@ export default function Navbar(props) {
           variant="permanent"
           anchor="left"
           classes={{ paper: classes.drawerPaper }}>
-          <List>
+          <List style={{ height: "100%" }}>
             <ListItem style={{ maxWidth: "100%" }}>
               <ListItemText primary={renderLogin()} />
             </ListItem>
@@ -195,8 +199,8 @@ export default function Navbar(props) {
               </ListItemIcon>
               <ListItemText primary="Relatório" />
             </ListItem>
+            {renderNewUserRegister()}
           </List>
-          <List style={{ marginTop: "21rem" }}>{renderNewUserRegister()}</List>
         </Drawer>
       );
     } else {
