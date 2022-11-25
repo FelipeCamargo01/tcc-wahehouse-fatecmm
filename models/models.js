@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize");
-const connection = require("../database/database");
+const Sequelize = require("sequelize")
+const connection = require("../database/database")
 
 const User = connection.define(
   "users",
@@ -28,21 +28,21 @@ const User = connection.define(
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     role: {
       allowNull: false,
-      type: Sequelize.STRING
-    }
+      type: Sequelize.STRING,
+    },
   },
   {
     freezeTableName: true,
   }
-);
+)
 
 const Supplier = connection.define(
   "suppliers",
@@ -66,39 +66,39 @@ const Supplier = connection.define(
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     cnpj: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     //razão social
     corporateName: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     //nome fantasia
     fantasyName: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     cep: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     addressNumber: {
       allowNull: false,
-      type: Sequelize.STRING
-    }
+      type: Sequelize.STRING,
+    },
   },
   {
     freezeTableName: true,
   }
-);
+)
 
 const Product = connection.define(
   "products",
@@ -111,7 +111,7 @@ const Product = connection.define(
     SKU: {
       type: Sequelize.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     price: {
       type: Sequelize.DOUBLE,
@@ -121,7 +121,7 @@ const Product = connection.define(
       type: Sequelize.UUID,
       references: { model: "suppliers", key: "id" },
       allowNull: false,
-      onDelete: 'cascade'
+      onDelete: "cascade",
     },
     productImage: {
       type: Sequelize.STRING,
@@ -129,26 +129,26 @@ const Product = connection.define(
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     //lote
     batchNumber: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     description: {
       type: Sequelize.STRING,
-      allowNull: true
-    }
+      allowNull: true,
+    },
   },
   {
     freezeTableName: true,
   }
-);
+)
 
 const StockHistory = connection.define(
   "stock-history",
@@ -166,8 +166,8 @@ const StockHistory = connection.define(
     productId: {
       type: Sequelize.STRING,
       references: { model: "products", key: "id" },
+      onDelete: "cascade",
       allowNull: false,
-      onDelete: 'cascade'
     },
     quantity: {
       type: Sequelize.INTEGER,
@@ -179,41 +179,79 @@ const StockHistory = connection.define(
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     actionDate: {
       allowNull: false,
-      type: Sequelize.DATE
-    }
+      type: Sequelize.DATE,
+    },
   },
   {
     freezeTableName: true,
   }
-);
+)
+
+const Tag = connection.define(
+  "tags",
+  {
+    id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+    product_sku: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      references: { model: "products", key: "SKU" },
+      onDelete: "cascade",
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+  },
+  {
+    freezeTableName: true,
+  }
+)
 
 Supplier.hasMany(Product, {
   foreignKey: "supplierId",
   onDelete: "cascade",
   onUpdate: "cascade",
-  hooks: true
-});
+  hooks: true,
+})
+
 Product.hasMany(StockHistory, {
   foreignKey: "productId",
   onDelete: "cascade",
   onUpdate: "cascade",
-  hooks: true
-});
+  hooks: true,
+})
 
-Product.belongsTo(Supplier, { foreignKey: "supplierId" });
-StockHistory.belongsTo(Product, { foreignKey: "productId" });
+Product.hasMany(Tag, {
+  foreignKey: "product_sku",
+  onDelete: "cascade",
+  onUpdate: "cascade",
+  hooks: true,
+})
+
+Product.belongsTo(Supplier, { foreignKey: "supplierId" })
+StockHistory.belongsTo(Product, { foreignKey: "productId" })
+Tag.belongsTo(Product, { foreignKey: "product_sku" })
 
 module.exports = {
   Product,
   Supplier,
   StockHistory,
   User,
-};
+  Tag,
+}

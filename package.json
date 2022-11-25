@@ -25,6 +25,7 @@
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
     "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
     "react": "^17.0.2",
     "react-currency-input-field": "^3.6.9",
     "react-dom": "^17.0.2",
@@ -33,7 +34,7 @@
     "react-scripts": "4.0.3",
     "react-select-search": "^4.1.2",
     "react-toastify": "^8.1.0",
-    "sequelize": "^6.8.0",
+    "sequelize": "^6.25.8",
     "web-vitals": "^1.1.2",
     "xlsx": "^0.18.5",
     "zingchart": "^2.9.10",
@@ -67,5 +68,8 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sequelize-cli": "^6.5.2"
+  }
 }
