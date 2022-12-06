@@ -59,7 +59,6 @@ export default function SignUp(props) {
           } else {
             if (isAdminUser) {
               toast.success("Usuário criado com sucesso!");
-              document.getElementById("signup-form").reset();
             } else {
               if (response.data.data?.accessToken) {
                 localStorage.setItem(
