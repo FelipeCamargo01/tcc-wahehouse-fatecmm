@@ -24,7 +24,7 @@ class StockHistoryController {
   static async getStockHistory() {
     const suppliers = await StockHistory.findAll({
       raw: true,
-      order: [["createdAt", "DESC"]],
+      order: [["actionDate", "DESC"]],
       include: [{ model: Product }],
     })
     return ResponseParse.response("OK", suppliers)
@@ -70,12 +70,12 @@ class StockHistoryController {
     ]
 
     const stockHistory = await StockHistory.findAll(
-      { raw: true, order: [["createdAt", "DESC"]], include: [{ model: Product }] },
+      { raw: true, order: [["actionDate", "DESC"]], include: [{ model: Product }] },
       {
         where: {
           [Op.and]: [
-            { createdAt: { [Op.gte]: momentUtil.getMondayDayOfWeek() } },
-            { createdAt: { [Op.lte]: momentUtil.getSundayDayOfWeek() } },
+            { actionDate: { [Op.gte]: momentUtil.getMondayDayOfWeek() } },
+            { actionDate: { [Op.lte]: momentUtil.getSundayDayOfWeek() } },
           ],
         },
       }
