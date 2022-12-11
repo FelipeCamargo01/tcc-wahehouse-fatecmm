@@ -16,7 +16,7 @@ class StockHistoryController {
       type: body.type,
       productId: product.SKU,
       quantity: body.quantity,
-      actionDate: moment(new Date()),
+      actionDate: moment(),
     })
     return ResponseParse.response("Movimentação criada com sucesso", stockHistory)
   }
