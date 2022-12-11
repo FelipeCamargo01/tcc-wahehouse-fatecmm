@@ -81,6 +81,8 @@ class StockHistoryController {
       }
     )
 
+    console.log(stockHistory);
+
     for (let i = 0; i < stockHistory.length; i++) {
       const day = moment(stockHistory[i].actionDate).day()
       if (stockHistory[i].type === "Entrada") {
