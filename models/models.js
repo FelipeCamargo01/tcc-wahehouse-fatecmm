@@ -135,11 +135,6 @@ const Product = connection.define(
       allowNull: false,
       type: Sequelize.DATE,
     },
-    //lote
-    batchNumber: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     description: {
       type: Sequelize.STRING,
       allowNull: true,

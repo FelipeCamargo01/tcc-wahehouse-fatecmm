@@ -49,7 +49,6 @@ export default function Product(props) {
   const [productPrice, setProductPrice] = useState(null);
   const [productSupplierId, setProductSupplierId] = useState(null);
   const [productImage, setProductImage] = useState(null);
-  const [productBatchNumber, setProductBatchNumber] = useState(null);
   const [productDescription, setProductDescription] = useState(null);
   const [selectedProductSupplier, setSelectedProductSupplier] = useState(null);
   const [productsItems, setProductItems] = useState([]);
@@ -63,7 +62,6 @@ export default function Product(props) {
     { title: "Nome", field: "name" },
     { title: "Fornecedor", field: "supplier", productSuppliers },
     { title: "Preço Unitário (R$)", field: "price" },
-    { title: "Lote", field: "batchNumber" },
     { title: "Descrição", field: "description" },
   ]);
 
@@ -100,7 +98,6 @@ export default function Product(props) {
 
   const resetData = () => {
     setProductSKU(null);
-    setProductBatchNumber(null);
     setProductName(null);
     setSelectedProductSupplier(null);
     setProductPrice(null);
@@ -116,7 +113,6 @@ export default function Product(props) {
       price: productPrice,
       supplierId: selectedProductSupplier,
       description: productDescription,
-      batchNumber: productBatchNumber,
     })
       .then((response) => {
         toast.success(response.data);
@@ -145,7 +141,6 @@ export default function Product(props) {
           sku: response.data[i].SKU,
           price: response.data[i].price,
           supplier: response.data[i]["supplier.name"],
-          batchNumber: response.data[i].batchNumber,
           description: response.data[i].description,
         });
       }
@@ -260,19 +255,6 @@ export default function Product(props) {
                       <InputAdornment position="end">R$</InputAdornment>
                     ),
                   }}></TextField>
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  variant="outlined"
-                  label="Lote"
-                  value={productBatchNumber}
-                  type="number"
-                  fullWidth
-                  size="small"
-                  required
-                  onChange={(e) =>
-                    setProductBatchNumber(e.target.value)
-                  }></TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField

@@ -10,8 +10,7 @@ class ProductController {
       SKU: body.SKU,
       price: body.price,
       supplierId: body.supplierId,
-      description: body.description,
-      batchNumber: body.batchNumber,
+      description: body.description
     });
 
     return ResponseParse.response("OK", "Produto criado com sucesso!");
@@ -39,8 +38,7 @@ class ProductController {
         name: body.name,
         price: body.price,
         supplierId: body.supplierId,
-        description: body.description,
-        batchNumber: body.batchNumber,
+        description: body.description
       },
       {
         where: {
