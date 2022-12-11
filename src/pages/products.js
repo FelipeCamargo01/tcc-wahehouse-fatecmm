@@ -134,13 +134,14 @@ export default function Product(props) {
     setProductItems([]);
     let products = [];
     UserService.getProducts().then((response) => {
+      console.log(response.data);
       for (let i = 0; i < response.data.length; i++) {
         products.push({
           id: response.data[i].id,
           name: response.data[i].name,
           sku: response.data[i].SKU,
           price: response.data[i].price,
-          supplier: response.data[i]["supplier.name"],
+          supplier: response.data[i]["supplier.fantasyName"],
           description: response.data[i].description,
         });
       }
